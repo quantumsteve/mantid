@@ -1108,19 +1108,8 @@ void MdViewerWidget::dragEnterEvent(QDragEnterEvent *e) {
   QString name = e->mimeData()->objectName();
   if (name == "MantidWorkspace") {
     QString text = e->mimeData()->text();
-    int endIndex = 0;
     QStringList wsNames;
-    while (text.indexOf("[\"", endIndex) > -1) {
-      int startIndex = text.indexOf("[\"", endIndex) + 2;
-      endIndex = text.indexOf("\"]", startIndex);
-      QString candidate = text.mid(startIndex, endIndex - startIndex);
-      if(boost::dynamic_pointer_cast<IPeaksWorkspace>(AnalysisDataService::Instance().retrieve(candidate.toStdString()))){
-        e->accept();
-      }
-      else{
-        e->ignore();
-      }
-    }
+    handleDragAndDropPeaksWorkspaces(e,text, wsNames);
   }
   else {
     e->ignore();
@@ -1135,38 +1124,44 @@ void MdViewerWidget::dropEvent(QDropEvent *e) {
   QString name = e->mimeData()->objectName();
   if (name == "MantidWorkspace") {
     QString text = e->mimeData()->text();
-    int endIndex = 0;
     QStringList wsNames;
-    while (text.indexOf("[\"", endIndex) > -1) {
-      int startIndex = text.indexOf("[\"", endIndex) + 2;
-      endIndex = text.indexOf("\"]", startIndex);
-      QString candidate = text.mid(startIndex, endIndex - startIndex);
-      if(boost::dynamic_pointer_cast<IPeaksWorkspace>(AnalysisDataService::Instance().retrieve(candidate.toStdString())))
-      {
-          wsNames.append(candidate);
-          e->accept();
-      }
-      else
-      {
-          e->ignore();
-      }
-    }
+    handleDragAndDropPeaksWorkspaces(e,text, wsNames);
     if(!wsNames.empty()){
-        // Show these peaks workspaces
-        this->createPeakWorkspaceViaDragAndDrop(wsNames);
+      // We render the first workspace name, it is a peak workspace and the instrument is not relevant
+      renderWorkspace(wsNames[0], 1, "");
     }
-}
+  }
 }
 
 /**
- * Load the peaks workspace into the VSI if the current view is a SplatterplotView.
- * @param workspaces A list with the workspace names.
+ * Handle the drag and drop events of peaks workspaces.
+ * @param e The event.
+ * @param text String containing information regarding the workspace name.
+ * @param wsNames A reference to a list of workspaces names, which are being extracted.
  */
-void MdViewerWidget::createPeakWorkspaceViaDragAndDrop(QStringList workspaces){
-  if (dynamic_cast<SplatterPlotView *>(this->currentView))
-  {
-    // We render the first workspace name, it is a peak workspace and the instrument is not relevant
-    renderWorkspace(workspaces[0], 1, "");
+void MdViewerWidget::handleDragAndDropPeaksWorkspaces(QEvent* e, QString text, QStringList& wsNames)
+{
+  int endIndex = 0;
+  while (text.indexOf("[\"", endIndex) > -1) {
+    int startIndex = text.indexOf("[\"", endIndex) + 2;
+    endIndex = text.indexOf("\"]", startIndex);
+    QString candidate = text.mid(startIndex, endIndex - startIndex);
+    if(dynamic_cast<SplatterPlotView *>(this->currentView))
+    {
+      if(boost::dynamic_pointer_cast<IPeaksWorkspace>(AnalysisDataService::Instance().retrieve(candidate.toStdString())))
+      {
+        wsNames.append(candidate);
+        e->accept();
+      }
+      else 
+      {
+        e->ignore();
+      }
+    }
+    else
+    {
+        e->ignore();
+    }
   }
 }
 
