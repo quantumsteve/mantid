@@ -15,6 +15,8 @@ class pqPipelineSource;
 class pqViewSettingsReaction;
 class vtkSMDoubleVectorProperty;
 
+class QDragEnterEvent;
+class QDropEvent;
 class QAction;
 class QEvent;
 class QHBoxLayout;
@@ -109,7 +111,10 @@ protected:
   /// Handle workspace replacement tasks.
   void afterReplaceHandle(const std::string &wsName,
                           const boost::shared_ptr<Mantid::API::Workspace> ws);
-
+  /// Detects if something is dragged onto the VSI
+  void dragEnterEvent(QDragEnterEvent *e);
+  /// Reacts to something being dropped onto the VSI
+  void dropEvent(QDropEvent *e);
 private:
   Q_DISABLE_COPY(MdViewerWidget)
 
@@ -175,6 +180,8 @@ private:
   bool checkIfTechniqueContainsKeyword(const std::set<std::string>& techniques, const std::string& keyword) const;
   /// Reset the current view to the appropriate initial view.
   void resetCurrentView(int workspaceType, const std::string& instrumentName);
+  /// Drag and drop PeaksWorkspace
+  void createPeakWorkspaceViaDragAndDrop(QStringList workspaces);
 };
 
 } // SimpleGui
