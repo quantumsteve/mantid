@@ -8,9 +8,13 @@ if ( CXXTEST_FOUND )
                         ../../TestHelpers/src/ComponentCreationHelper.cpp
                         ../../TestHelpers/src/WorkspaceCreationHelper.cpp
                         ../../TestHelpers/src/NexusTestHelper.cpp
-      )
+                        ../../TestHelpers/src/MDEventsTestHelper.cpp 
+                        ../../TestHelpers/src/ScopedFileHelper.cpp
+                        ../../TestHelpers/src/BoxControllerDummyIO.cpp
+  )
+
   cxxtest_add_test ( DataObjectsTest ${TEST_FILES} )
-  target_link_libraries( DataObjectsTest DataObjects )
+  target_link_libraries( DataObjectsTest DataObjects ${GMOCK_LIBRARIES} ${GTEST_LIBRARIES})
   # Specify implicit dependency, but don't link to it
   add_dependencies ( DataObjectsTest UserAlgorithms )
   add_dependencies ( FrameworkTests DataObjectsTest )

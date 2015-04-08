@@ -24,28 +24,33 @@ set ( EXPORT_FILES
   src/Exports/ReferenceFrame.cpp
   src/Exports/Goniometer.cpp
   src/Exports/Object.cpp
+  src/Exports/PeakShape.cpp
+  src/Exports/Group.cpp
   src/Exports/PointGroup.cpp
   src/Exports/PointGroupFactory.cpp
   src/Exports/SpaceGroup.cpp
   src/Exports/SpaceGroupFactory.cpp
+  src/Exports/SymmetryElement.cpp
+  src/Exports/SymmetryElementFactory.cpp
   src/Exports/SymmetryOperation.cpp
   src/Exports/SymmetryOperationFactory.cpp
-)  
+)
 
 set ( SRC_FILES
 )
 
-set ( INC_FILES 
+set ( INC_FILES
 )
 
 set ( PY_FILES
   __init__.py
+  _aliases.py
 )
 
 #############################################################################################
 # Generate a source file from the export definitions and provided template
 #############################################################################################
-create_module ( ${MODULE_TEMPLATE} ${CMAKE_CURRENT_BINARY_DIR}/geometry.cpp EXPORT_FILES 
+create_module ( ${MODULE_TEMPLATE} ${CMAKE_CURRENT_BINARY_DIR}/geometry.cpp EXPORT_FILES
                 SRC_FILES )
 
 #############################################################################################
@@ -70,12 +75,16 @@ add_library ( PythonGeometryModule ${SRC_FILES} ${INC_FILES} ${PYTHON_INSTALL_FI
 set_python_properties( PythonGeometryModule _geometry )
 set_target_output_directory ( PythonGeometryModule ${OUTPUT_DIR} .pyd )
 # Add the required dependencies
-target_link_libraries ( PythonGeometryModule PythonKernelModule ${PYTHON_DEPS} )
+target_link_libraries ( PythonGeometryModule PythonKernelModule Geometry )
+
+if (OSX_VERSION VERSION_GREATER 10.8)
+  set_target_properties ( PythonGeometryModule PROPERTIES INSTALL_RPATH "@loader_path/../../../MacOS;@loader_path/../kernel/")
+endif ()
 
 ###########################################################################
 # Installation settings
 ###########################################################################
 install ( TARGETS PythonGeometryModule ${SYSTEM_PACKAGE_TARGET} DESTINATION ${BIN_DIR}/mantid/geometry )
 
-# Pure Python files 
+# Pure Python files
 install ( FILES ${PY_FILES} DESTINATION ${BIN_DIR}/mantid/geometry )

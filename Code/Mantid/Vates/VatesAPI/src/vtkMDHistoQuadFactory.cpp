@@ -1,10 +1,11 @@
 #include "MantidAPI/IMDWorkspace.h"
 #include "MantidKernel/CPUTimer.h"
-#include "MantidMDEvents/MDHistoWorkspace.h"
+#include "MantidDataObjects/MDHistoWorkspace.h"
 #include "MantidAPI/NullCoordTransform.h"
 #include "MantidVatesAPI/vtkMDHistoQuadFactory.h"
 #include "MantidVatesAPI/Common.h"
 #include "MantidVatesAPI/ProgressAction.h"
+#include "MantidVatesAPI/vtkNullUnstructuredGrid.h"
 #include "vtkCellArray.h"
 #include "vtkCellData.h"
 #include "vtkFloatArray.h"
@@ -15,7 +16,7 @@
 
 using Mantid::API::IMDWorkspace;
 using Mantid::Kernel::CPUTimer;
-using Mantid::MDEvents::MDHistoWorkspace;
+using Mantid::DataObjects::MDHistoWorkspace;
 
 namespace Mantid
 {
@@ -210,6 +211,14 @@ namespace Mantid
         delete [] pointIDs;
         delete [] voxelShown;
         delete [] pointNeeded;
+
+        // Hedge against empty data sets
+        if (visualDataSet->GetNumberOfPoints() <= 0)
+        {
+          visualDataSet->Delete();
+          vtkNullUnstructuredGrid nullGrid;
+          visualDataSet = nullGrid.createNullData();
+        }
 
         return visualDataSet;
       }

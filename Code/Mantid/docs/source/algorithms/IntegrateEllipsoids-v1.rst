@@ -110,7 +110,7 @@ added to the list of events for a peak provided that the fractional
 :math:`Q` -vector) is closer to the :math:`h,k,l` of that peak, 
 than to the :math:`h,k,l` of any
 other peak AND the :math:`Q` -vector for that event is within the specified
-radius of the :math:`Q` -vector for that peak.
+radius of the :math:`Q` -vector for that peak. This technique makes the algorithm suitable for nuclear peaks, but may not be suitable for magnetic peaks.
 
 When the lists of events near the peaks have been built, the three
 principal axes of the set of events near each peak are found, and the
@@ -155,12 +155,14 @@ ellipsoid. The outer surface of the background ellipsoidal shell is an
 ellipsoidal surface with the same relative axis lengths as the inner
 surface.
 
+This algorithm uses principle component analysis to determine the principle axis for each peak. For the event list (QLab) associated with each peak, the algorithm determines a covariance matrix, and uses that to establish eigenvectors corresponding to the principle axis (all orthogonal). The sizes of each principle axis are used define the region of which events will be counted/integrated from those already associated with each peak.
+
 Usage
 ------
 
 **Example - IntegrateEllipsoids:**
 
-The code iteslef works but disabled from doc tests as takes too long to complete. User should provide its own 
+The code itself works but disabled from doc tests as takes too long to complete. User should provide its own 
 event nexus file instead of **TOPAZ_3132_event.nxs** used within this example. The original **TOPAZ_3132_event.nxs**
 file is availible in `Mantid system tests repository <https://github.com/mantidproject/systemtests/tree/master/Data/TOPAZ_3132_event.nxs>`_.
 

@@ -2,111 +2,149 @@
 #define MANTID_GEOMETRY_POINTGROUPFACTORY_H_
 
 #include "MantidGeometry/DllConfig.h"
-#include "MantidKernel/DynamicFactory.h"
 #include "MantidKernel/SingletonHolder.h"
 #include "MantidGeometry/Crystal/PointGroup.h"
+#include "MantidGeometry/Crystal/SpaceGroup.h"
+#include "MantidKernel/RegistrationHelper.h"
 
 #include <boost/regex.hpp>
 
-namespace Mantid
-{
-namespace Geometry
-{
-  /** PointGroupFactory
+namespace Mantid {
+namespace Geometry {
 
-    A factory for point groups. Point group objects can be constructed by
-    supplying the Hermann-Mauguin-symbol like this:
+class MANTID_GEOMETRY_DLL PointGroupGenerator {
+public:
+  PointGroupGenerator(const std::string &hmSymbol,
+                      const std::string &generatorInformation,
+                      const std::string &description);
 
-        PointGroup_sptr cubic = PointGroupFactory::Instance().createPointgroup("m-3m");
+  ~PointGroupGenerator() {}
 
-    Furthermore it's possible to query available point groups, either all available
-    groups or only point groups belonging to a certain crystal system.
+  inline std::string getHMSymbol() const { return m_hmSymbol; }
+  inline std::string getGeneratorString() const { return m_generatorString; }
+  inline std::string getDescription() const { return m_description; }
 
-      @author Michael Wedel, Paul Scherrer Institut - SINQ
-      @date 09/09/2014
+  PointGroup_sptr getPrototype();
 
-      Copyright © 2014 PSI-MSS
+private:
+  inline bool hasValidPrototype() const {
+    return static_cast<bool>(m_prototype);
+  }
 
-    This file is part of Mantid.
+  PointGroup_sptr generatePrototype();
 
-    Mantid is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 3 of the License, or
-    (at your option) any later version.
+  std::string m_hmSymbol;
+  std::string m_generatorString;
+  std::string m_description;
 
-    Mantid is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
+  PointGroup_sptr m_prototype;
+};
 
-    You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+typedef boost::shared_ptr<PointGroupGenerator> PointGroupGenerator_sptr;
 
-    File change history is stored at: <https://github.com/mantidproject/mantid>
-    Code Documentation is available at: <http://doxygen.mantidproject.org>
-  */
-  class MANTID_GEOMETRY_DLL PointGroupFactoryImpl : public Kernel::DynamicFactory<PointGroup>
-  {
-  public:
-      PointGroup_sptr createPointGroup(const std::string &hmSymbol) const;
-      PointGroup_sptr createPointGroupFromSpaceGroupSymbol(const std::string &spaceGroupSymbol) const;
+/**
+  @class PointGroupFactory
 
-      std::vector<std::string> getAllPointGroupSymbols() const;
-      std::vector<std::string> getPointGroupSymbols(const PointGroup::CrystalSystem &crystalSystem) const;
+  A factory for point groups. Point group objects can be constructed by
+  supplying the Hermann-Mauguin-symbol like this:
 
-      /// Subscribes a point group into the factory
-      template <class C>
-      void subscribePointGroup()
-      {
-          Kernel::Instantiator<C, PointGroup> *instantiator = new Kernel::Instantiator<C, PointGroup>;
-          PointGroup_sptr temporaryPointgroup = instantiator->createInstance();
-          std::string hmSymbol = temporaryPointgroup->getSymbol();
+      PointGroup_sptr cubic =
+          PointGroupFactory::Instance().createPointgroup("m-3m");
 
-          subscribe(hmSymbol, instantiator);
+  Furthermore it's possible to query available point groups, either all
+  available
+  groups or only point groups belonging to a certain crystal system.
 
-          addToCrystalSystemMap(temporaryPointgroup->crystalSystem(), hmSymbol);
-      }
+    @author Michael Wedel, Paul Scherrer Institut - SINQ
+    @date 09/09/2014
 
-      /// Unsubscribes a point group from the factory
-      void unsubscribePointGroup(const std::string &hmSymbol)
-      {
-          unsubscribe(hmSymbol);
-          removeFromCrystalSystemMap(hmSymbol);
-      }
+    Copyright © 2014 PSI-MSS
 
-  private:
-      friend struct Mantid::Kernel::CreateUsingNew<PointGroupFactoryImpl>;
+  This file is part of Mantid.
 
-      PointGroupFactoryImpl();
-      void addToCrystalSystemMap(const PointGroup::CrystalSystem &crystalSystem, const std::string &hmSymbol);
-      void removeFromCrystalSystemMap(const std::string &hmSymbol);
+  Mantid is free software; you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation; either version 3 of the License, or
+  (at your option) any later version.
 
-      std::string pointGroupSymbolFromSpaceGroupSymbol(const std::string &spaceGroupSymbol) const;
+  Mantid is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
 
-      std::map<std::string, PointGroup::CrystalSystem> m_crystalSystemMap;
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-      boost::regex m_screwAxisRegex;
-      boost::regex m_glidePlaneRegex;
-      boost::regex m_centeringRegex;
-      boost::regex m_originChoiceRegex;
-  };
+  File change history is stored at: <https://github.com/mantidproject/mantid>
+  Code Documentation is available at: <http://doxygen.mantidproject.org>
+*/
+class MANTID_GEOMETRY_DLL PointGroupFactoryImpl {
+public:
+  PointGroup_sptr createPointGroup(const std::string &hmSymbol);
+  PointGroup_sptr
+  createPointGroupFromSpaceGroup(const SpaceGroup_const_sptr &spaceGroup);
+  PointGroup_sptr
+  createPointGroupFromSpaceGroup(const SpaceGroup &spaceGroup);
+
+  bool isSubscribed(const std::string &hmSymbol) const;
+
+  std::vector<std::string> getAllPointGroupSymbols() const;
+  std::vector<std::string>
+  getPointGroupSymbols(const PointGroup::CrystalSystem &crystalSystem);
+
+  void subscribePointGroup(const std::string &hmSymbol,
+                           const std::string &generatorString,
+                           const std::string &description);
+
+  /// Unsubscribes a point group from the factory
+  void unsubscribePointGroup(const std::string &hmSymbol) {
+    m_generatorMap.erase(hmSymbol);
+  }
+
+private:
+  friend struct Mantid::Kernel::CreateUsingNew<PointGroupFactoryImpl>;
+
+  PointGroupFactoryImpl();
+
+  std::string pointGroupSymbolFromSpaceGroupSymbol(
+      const std::string &spaceGroupSymbol) const;
+
+  PointGroup_sptr getPrototype(const std::string &hmSymbol);
+  void subscribe(const PointGroupGenerator_sptr &generator);
+  PointGroup_sptr
+  constructFromPrototype(const PointGroup_sptr &prototype) const;
+
+  std::map<std::string, PointGroupGenerator_sptr> m_generatorMap;
+  std::map<std::string, PointGroup::CrystalSystem> m_crystalSystemMap;
+
+  boost::regex m_screwAxisRegex;
+  boost::regex m_glidePlaneRegex;
+  boost::regex m_centeringRegex;
+  boost::regex m_originChoiceRegex;
+};
 
 // This is taken from FuncMinimizerFactory
 #ifdef _WIN32
-    template class MANTID_GEOMETRY_DLL Mantid::Kernel::SingletonHolder<PointGroupFactoryImpl>;
+template class MANTID_GEOMETRY_DLL
+Mantid::Kernel::SingletonHolder<PointGroupFactoryImpl>;
 #endif
 
-typedef Mantid::Kernel::SingletonHolder<PointGroupFactoryImpl> PointGroupFactory;
-
+typedef Mantid::Kernel::SingletonHolder<PointGroupFactoryImpl>
+PointGroupFactory;
 
 } // namespace Geometry
 } // namespace Mantid
 
-#define DECLARE_POINTGROUP(classname) \
-        namespace { \
-    Mantid::Kernel::RegistrationHelper register_pointgroup_##classname( \
-  ((Mantid::Geometry::PointGroupFactory::Instance().subscribePointGroup<classname>()) \
-    , 0)); \
-    }
+#define PGF_CONCAT_IMPL(x, y) x##y
+#define PGF_CONCAT(x, y) PGF_CONCAT_IMPL(x, y)
 
-#endif  /* MANTID_GEOMETRY_POINTGROUPFACTORY_H_ */
+#define DECLARE_POINTGROUP(hmSymbol, generators, description)                  \
+  namespace {                                                                  \
+  Mantid::Kernel::RegistrationHelper PGF_CONCAT(register_pointgroup,           \
+                                                __COUNTER__)(                  \
+      ((Mantid::Geometry::PointGroupFactory::Instance().subscribePointGroup(   \
+           hmSymbol, generators, description)),                                \
+       0));                                                                    \
+  }
+
+#endif /* MANTID_GEOMETRY_POINTGROUPFACTORY_H_ */

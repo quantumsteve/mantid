@@ -1,4 +1,4 @@
-cmake_minimum_required( VERSION 2.8 )
+cmake_minimum_required( VERSION 2.8.12 )
 project( VatesSimpleGui )
 set( PROJECT_NAME VatesSimpleGui )
 
@@ -9,6 +9,8 @@ include_directories(
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}/../QtWidgets
   ${CMAKE_CURRENT_BINARY_DIR}/../ViewWidgets
+  ${CMAKE_SOURCE_DIR}/MantidQt/MantidWidgets/inc
+  ${CMAKE_BINARY_DIR}/MantidQt/MantidWidgets
 )
 
 # These are the C++ files to be compiled.
@@ -35,6 +37,8 @@ set( TEST_SUITES
 )
 
 add_executable( ${PROJECT_NAME} ${INCLUDE_FILES} ${SOURCE_FILES} ${MOC_SRCS} )
+
+include_directories( SYSTEM ${PARAVIEW_INCLUDE_DIRS} )
 
 target_link_libraries( ${PROJECT_NAME}
 pqCore pqComponents pqApplicationComponents

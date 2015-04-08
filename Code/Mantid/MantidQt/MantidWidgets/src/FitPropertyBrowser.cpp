@@ -127,7 +127,8 @@ FitPropertyBrowser::FitPropertyBrowser(QWidget *parent, QObject* mantidui):
   m_autoBgName(QString::fromStdString(Mantid::Kernel::ConfigService::Instance().getString("curvefitting.autoBackground"))),
   m_autoBackground(NULL),
   m_decimals(-1),
-  m_mantidui(mantidui)
+  m_mantidui(mantidui),
+  m_shouldBeNormalised(false)
 {
   // Make sure plugins are loaded
   std::string libpath = Mantid::Kernel::ConfigService::Instance().getString("plugins.directory");
@@ -368,6 +369,8 @@ void FitPropertyBrowser::initLayout(QWidget *w)
 
   QMenu* setupSubMenuCustom = new QMenu(this);
   m_setupActionCustomSetup->setMenu(setupSubMenuCustom);
+  // empty menu for now, so set it disabled to avoid confusing users
+  m_setupActionCustomSetup->setEnabled(false);
 
   QMenu* setupSubMenuManage = new QMenu(this);
   QAction* setupActionSave = new QAction("Save Setup",this);
@@ -390,6 +393,8 @@ void FitPropertyBrowser::initLayout(QWidget *w)
 
   QMenu* setupSubMenuRemove = new QMenu(this);
   m_setupActionRemove->setMenu(setupSubMenuRemove); 
+  // empty menu for now, so set it disabled to avoid confusing users
+  m_setupActionRemove->setEnabled(false);
 
   QSignalMapper* setupMapper = new QSignalMapper(this);
   setupMapper->setMapping(setupActionClearFit,"ClearFit");
@@ -480,6 +485,9 @@ void FitPropertyBrowser::updateSetupMenus()
 
   QSignalMapper* mapperLoad = new QSignalMapper(this);
   QSignalMapper* mapperRemove = new QSignalMapper(this);
+  // enable actions that open the menus only if there will be >=1 entries in there
+  m_setupActionCustomSetup->setEnabled(names.size() >= 1);
+  m_setupActionRemove->setEnabled(names.size() >= 1);
   for (int i = 0; i < names.size(); i++)
   {
     QAction* itemLoad = new QAction(names.at(i), this);
@@ -1606,6 +1614,7 @@ void FitPropertyBrowser::doFit(int maxIterations)
     alg->setProperty("IgnoreInvalidData",ignoreInvalidData());
     alg->setPropertyValue("CostFunction",costFunction());
     alg->setProperty( "MaxIterations", maxIterations );
+    alg->setProperty( "Normalise", m_shouldBeNormalised );
     // Always output each composite function but not necessarily plot it
     alg->setProperty("OutputCompositeMembers", true);
     if ( alg->existsProperty("ConvolveMembers") )

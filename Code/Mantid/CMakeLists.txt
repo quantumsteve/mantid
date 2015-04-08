@@ -1,8 +1,8 @@
 ###########################################################################
 # CMake version check.
-# Only versions after 2.8.5 will find the HL component for HDF5
+# Only versions after 2.8.12 will find the HL component for HDF5
 ###########################################################################
-cmake_minimum_required ( VERSION 2.8.5 )
+cmake_minimum_required ( VERSION 2.8.12 )
 
 # System package target is important for the windows builds as it allows us to package only the dlls and exes and exclude libs. Defaults to empty for other platforms.
 set ( SYSTEM_PACKAGE_TARGET "")
@@ -12,6 +12,17 @@ set ( CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/Build/CMake")
 
 # Define the project name.
 project ( Mantid )
+
+###########################################################################
+# Quick exit if we only want data targets
+###########################################################################
+if( DATA_TARGETS_ONLY )
+  include( SetupDataTargets )
+  # System test config files
+  add_subdirectory( Testing/SystemTests/scripts )
+  return()
+endif()
+
 set ( CPACK_PACKAGE_SUFFIX "" CACHE STRING "suffix used to determine the deployment type")
 set_property(CACHE CPACK_PACKAGE_SUFFIX PROPERTY STRINGS nightly unstable "") #empty string and release are treated as the same thing
 
@@ -33,21 +44,21 @@ include ( ParaViewSetup )
 ###########################################################################
 IF(${CMAKE_SYSTEM_NAME} MATCHES "Windows")
 
-	if ( NOT THIRD_PARTY )
-  		set ( THIRD_PARTY "${PROJECT_SOURCE_DIR}/../Third_Party" )
-	endif ()
-	# Print out where we think we are looking for 3rd party stuff
-	message (STATUS "Setting THIRD_PARTY to be ${THIRD_PARTY}." )
+  if ( NOT THIRD_PARTY )
+      set ( THIRD_PARTY "${PROJECT_SOURCE_DIR}/../Third_Party" )
+  endif ()
+  # Print out where we think we are looking for 3rd party stuff
+  message (STATUS "Setting THIRD_PARTY to be ${THIRD_PARTY}." )
 
-	# Check that the 3rd party directory exists.
-	if (NOT IS_DIRECTORY "${THIRD_PARTY}")
+  # Check that the 3rd party directory exists.
+  if (NOT IS_DIRECTORY "${THIRD_PARTY}")
         message ( WARNING "Specified THIRD_PARTY directory doesn't exist!" )
-	endif()
+  endif()
 
-	include ( WindowsSetup )
+  include ( WindowsSetup )
 
-	# Settings for generating the windows Nullsoft package via CPack
-	include ( WindowsNSIS )
+  # Settings for generating the windows Nullsoft package via CPack
+  include ( WindowsNSIS )
 
 ENDIF()
 
@@ -110,6 +121,7 @@ set( DOCS_BUILDDIR ${CMAKE_BINARY_DIR}/docs )
 # Framework Build options
 set ( CXXTEST_SINGLE_LOGFILE CACHE BOOL "Switch to have the tests for each package run together")
 set ( CXXTEST_ADD_PERFORMANCE OFF CACHE BOOL "Switch to add Performance tests to the list of tests run by ctest?")
+set ( ENABLE_OPENCASCADE ON CACHE BOOL "Enable OpenCascade-based 3D visualisation")
 
 add_subdirectory ( Framework )
 
@@ -146,6 +158,9 @@ add_subdirectory ( MantidPlot )
 add_subdirectory ( scripts )
 
 add_subdirectory ( docs )
+
+# System test data target
+add_subdirectory ( Testing/SystemTests/scripts )
 
 ###########################################################################
 # Installation settings
@@ -185,7 +200,7 @@ if ( ENABLE_CPACK )
       message ( STATUS " CPACK_PACKAGE_FILE_NAME = ${CPACK_PACKAGE_FILE_NAME}" )
 
       # rhel requirements
-      set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.34.1,qt4 >= 4.2,nexus,nexus-python,gsl,glibc,qwtplot3d-qt4,muParser,numpy" )
+      set ( CPACK_RPM_PACKAGE_REQUIRES "boost >= 1.34.1,qt4 >= 4.2,nexus >= 4.3.1,nexus-python >= 4.3.1,gsl,glibc,qwtplot3d-qt4,muParser,numpy" )
       # OCE
       set( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},OCE-draw,OCE-foundation,OCE-modeling,OCE-ocaf,OCE-visualization")
       # Qwt is qwt5-qt4 in RHEL7
@@ -199,7 +214,7 @@ if ( ENABLE_CPACK )
       set ( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},python-ipython >= 1.1.0" )
       # scipy & matplotlib
       set ( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},scipy,python-matplotlib" )
-      set ( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},mxml,hdf,hdf5" )
+      set ( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},mxml,hdf,hdf5,jsoncpp" )
 
       if( "${UNIX_CODENAME}" MATCHES "Santiago" )
         # On RHEL6 we have to use an updated qscintilla to fix an auto complete bug
@@ -222,7 +237,7 @@ if ( ENABLE_CPACK )
                            "libboost-python${Boost_MAJOR_VERSION}.${Boost_MINOR_VERSION}.${Boost_SUBMINOR_VERSION},"
                            "libnexus0 (>= 4.3),libgsl0ldbl,libqtcore4 (>= 4.2),libqtgui4 (>= 4.2),libqt4-opengl (>= 4.2),"
                            "libqt4-xml (>= 4.2),libqt4-svg (>= 4.2),libqt4-qt3support (>= 4.2),qt4-dev-tools,"
-                           "libqwt5-qt4,libqwtplot3d-qt4-0,python-numpy,python-sip,python-qt4" )
+                           "libqwt5-qt4,libqwtplot3d-qt4-0,python-numpy,python-sip,python-qt4,libjsoncpp0" )
         set ( PERFTOOLS_DEB_PACKAGE "libgoogle-perftools0 (>= 1.7)" )
         if( "${UNIX_CODENAME}" MATCHES "lucid" )
           list ( APPEND DEPENDS_LIST ",libqscintilla2-5,"
@@ -247,8 +262,8 @@ if ( ENABLE_CPACK )
         # parse list to string required for deb package
         string ( REPLACE ";" "" CPACK_DEBIAN_PACKAGE_DEPENDS ${DEPENDS_LIST} )
       endif()
-      # soft requirement of tcmalloc - if built with it, then require it
-      IF ( USE_TCMALLOC AND TCMALLOC_FOUND )
+      # soft requirement of tcmalloc if selected
+      IF ( USE_TCMALLOC )
         message ( STATUS " Adding gperftools to the package requirements" )
         set ( CPACK_RPM_PACKAGE_REQUIRES "${CPACK_RPM_PACKAGE_REQUIRES},gperftools-libs >= 2.0" )
         set ( CPACK_DEBIAN_PACKAGE_DEPENDS "${CPACK_DEBIAN_PACKAGE_DEPENDS},${PERFTOOLS_DEB_PACKAGE}" )

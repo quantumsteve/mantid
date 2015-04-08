@@ -685,22 +685,48 @@ void MantidUI::showVatesSimpleInterface()
     {
       return;
     }
-    // Set the type of workspace, the GUI needs it
+
+    // Set the type of workspace, the GUI needs it and
+    // extract the instrument which was used to measure the workspace data
     int wsType = MantidQt::API::VatesViewerInterface::MDEW;
+
+    std::string instrumentName;
+    
+    // check for peak workspace
     if (pws)
     {
       wsType = MantidQt::API::VatesViewerInterface::PEAKS;
+      
+      instrumentName = pws->getInstrument()->getFullName();
     }
+
+  // Check for histo workspace
     if (mdhist)
     {
       wsType = MantidQt::API::VatesViewerInterface::MDHW;
+      
+      // Get the instrument name
+      if  (mdhist->getNumExperimentInfo() > 0 )
+      {
+        instrumentName = mdhist->getExperimentInfo(0)->getInstrument()->getFullName();
+      }
+    }
+
+    // Check for event workspace
+    if (mdews)
+    {
+      // Get the instrument name
+      if  (mdews->getNumExperimentInfo() > 0 )
+      {
+        instrumentName = mdews->getExperimentInfo(0)->getInstrument()->getFullName();
+      }
     }
 
     if (m_vatesSubWindow)
     {
       QWidget *vwidget = m_vatesSubWindow->widget();
       vwidget->show();
-      qobject_cast<MantidQt::API::VatesViewerInterface *>(vwidget)->renderWorkspace(wsName, wsType);
+      qobject_cast<MantidQt::API::VatesViewerInterface *>(vwidget)->renderWorkspace(wsName, wsType, instrumentName);
       return;
     }
     else
@@ -720,11 +746,12 @@ void MantidUI::showVatesSimpleInterface()
         connect(vsui, SIGNAL(requestClose()), m_vatesSubWindow, SLOT(close()));
         vsui->setParent(m_vatesSubWindow);
         m_vatesSubWindow->setWindowTitle("Vates Simple Interface");
+
         vsui->setupPluginMode();
         //m_appWindow->setGeometry(m_vatesSubWindow, vsui);
         m_vatesSubWindow->setWidget(vsui);
         m_vatesSubWindow->widget()->show();
-        vsui->renderWorkspace(wsName, wsType);
+        vsui->renderWorkspace(wsName, wsType, instrumentName);
       }
       else
       {
@@ -1072,7 +1099,8 @@ Table* MantidUI::createTableDetectors(MantidMatrix *m)
   {
     indices[i] = m->workspaceIndex(i);
   }
-  return createDetectorTable(m->workspaceName(), indices);
+  Table* t = createDetectorTable(m->workspaceName(), indices);
+  return t;
 }
 
 /**
@@ -1277,6 +1305,9 @@ Table* MantidUI::createDetectorTable(const QString & wsName, const Mantid::API::
       }
     }
   }
+
+  // want all the detector tables as read-only
+  t->setReadOnlyAllColumns(true);
   t->showNormal();
 
   return t;
@@ -1297,7 +1328,10 @@ Table* MantidUI::createDetectorTable(const QString & wsName, const Mantid::API::
   bool transpose = false;
   QString tableName = wsName + "-Detectors";
   Table* t = new MantidTable(appWindow()->scriptingEnv(), idtable, tableName, appWindow(), transpose);
-  if(!t) return NULL;
+  if(!t)
+    return NULL;
+  // want all the detector tables as read-only
+  t->setReadOnlyAllColumns(true);
   t->showNormal();
   return t;
 }
@@ -2276,7 +2310,7 @@ MultiLayer* MantidUI::mergePlots(MultiLayer* mlayer_1, MultiLayer* mlayer_2)
   mlayer_2->close();
 
   return mlayer_1;
-};
+}
 
 MantidMatrix* MantidUI::getMantidMatrix(const QString& wsName)
 {
@@ -2485,8 +2519,8 @@ void MantidUI::importNumSeriesLog(const QString &wsName, const QString &logName,
   {
     //Seconds offset
     t->setColName(0, "Time (sec)");
-    t->setColumnType(0, Table::Numeric); //six digits after 0
-    t->setNumericPrecision(6); //six digits after 0
+    t->setColumnType(0, Table::Numeric);
+    t->setNumericPrecision(16);   //it's the number of all digits
   }
 
   //Make the column header with the units, if any
@@ -2496,7 +2530,6 @@ void MantidUI::importNumSeriesLog(const QString &wsName, const QString &logName,
   t->setColName(1, column1);
 
   int iValueCurve = 0;
-  int iFilterCurve = 1;
 
   // Applying filters
   if (filter > 0)
@@ -2600,9 +2633,6 @@ void MantidUI::importNumSeriesLog(const QString &wsName, const QString &logName,
         }
       }
 
-      iValueCurve = 1;
-      iFilterCurve = 0;
-
     } //end (valid filter exists)
 
   }
@@ -2700,19 +2730,23 @@ void MantidUI::importNumSeriesLog(const QString &wsName, const QString &logName,
 
   if (filter && flt.filter())
   {
+    int iFilterCurve = 1;
     QwtPlotCurve *c = g->curve(iFilterCurve);
-    // Set the right axis as Y axis for the filter curve.
-    c->setAxis(2,1);
-    // Set style #3 (HorizontalSteps) for curve 1
-    // Set scale of right Y-axis (#3) from 0 to 1
-    g->setCurveStyle(iFilterCurve,3);
-    g->setScale(3,0,1);
-    // Fill area under the curve with a pattern
-    QBrush br = QBrush(Qt::gray, Qt::Dense5Pattern);
-    g->setCurveBrush(iFilterCurve, br);
-    // Set line colour
-    QPen pn = QPen(Qt::gray);
-    g->setCurvePen(iFilterCurve, pn);
+    if ( c )
+    {
+      // Set the right axis as Y axis for the filter curve.
+      c->setAxis(2,1);
+      // Set style #3 (HorizontalSteps) for curve 1
+      // Set scale of right Y-axis (#3) from 0 to 1
+      g->setCurveStyle(iFilterCurve,3);
+      g->setScale(3,0,1);
+      // Fill area under the curve with a pattern
+      QBrush br = QBrush(Qt::gray, Qt::Dense5Pattern);
+      g->setCurveBrush(iFilterCurve, br);
+      // Set line colour
+      QPen pn = QPen(Qt::gray);
+      g->setCurvePen(iFilterCurve, pn);
+    }
   }
   g->setXAxisTitle(t->colLabel(0));
   g->setYAxisTitle(t->colLabel(1).section(".",0,0));
@@ -3104,7 +3138,6 @@ MultiLayer* MantidUI::plot1D(const QMultiMap<QString,int>& toPlot, bool spectrum
   }
   bool isGraphNew = false;
   MultiLayer* ml = appWindow()->prepareMultiLayer(isGraphNew, plotWindow, plotTitle, clearWindow);
-  ml->setName(appWindow()->generateUniqueName(plotTitle + "-"));
   m_lastShown1DPlotWin = ml;
 
   // Do we plot try to plot as distribution. If request and it is not already one!

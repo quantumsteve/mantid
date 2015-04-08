@@ -548,7 +548,7 @@ add_custom_command ( OUTPUT ${SIP_SRC}
 )
 
 # Needed for sip.h header that can end up in a different place to to the main Python include directory
-include_directories ( ${SIP_INCLUDE_DIR} )
+include_directories ( SYSTEM ${SIP_INCLUDE_DIR} )
 # Needed for sip generated files to find includes in src
 include_directories ( ${CMAKE_CURRENT_SOURCE_DIR} )
 
@@ -764,6 +764,7 @@ include_directories ( ${CMAKE_CURRENT_BINARY_DIR} )
 ###########################################################################
 
 qt4_add_resources ( RES_FILES ${PROJECT_SOURCE_DIR}/Images/images.qrc )
+qt4_add_resources ( RES_FILES ${PROJECT_SOURCE_DIR}/Images//fonts/fonts.qrc )
 qt4_add_resources ( RES_FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/icons.qrc )
 qt4_add_resources ( RES_FILES ${PROJECT_SOURCE_DIR}/MantidQt/SliceViewer/icons/SliceViewerIcons.qrc )
 qt4_add_resources ( RES_FILES ${PROJECT_SOURCE_DIR}/MantidQt/CustomInterfaces/icons/CustomInterfacesIcons.qrc )
@@ -845,20 +846,29 @@ copy_files_to_dir ( "${CONFIG_RESET_SCRIPT}"
 ###########################################################################
 
 # Top-level python scripts
-set( PY_FILES mantidplotrc.py mantidplot.py mantid_qt_settings_editor.py )
+set( PY_FILES mantidplot.py mantidplotrc.py mantid_qt_settings_editor.py)
 copy_files_to_dir ( "${PY_FILES}"
-                     ${CMAKE_CURRENT_SOURCE_DIR}
-                     ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}
-                     PYTHON_INSTALL_FILES )
-# mantidplot.py package
+                            ${CMAKE_CURRENT_SOURCE_DIR}
+                            ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}
+                            PYTHON_INSTALL_FILES )
+# mantidplot package
 set( MTDPLOTPY_FILES
   __init__.py
   proxies.py
 )
 copy_files_to_dir ( "${MTDPLOTPY_FILES}"
-                     ${CMAKE_CURRENT_SOURCE_DIR}/mantidplotpy
-                     ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}/mantidplotpy
-                     MTDPLOT_INSTALL_FILES )
+                            ${CMAKE_CURRENT_SOURCE_DIR}/pymantidplot
+                            ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}/pymantidplot
+                            MTDPLOT_INSTALL_FILES )
+                            
+set( FUTURE_FILES
+  __init__.py
+  pyplot.py
+)
+copy_files_to_dir ( "${FUTURE_FILES}"
+                            ${CMAKE_CURRENT_SOURCE_DIR}/pymantidplot/future
+                            ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${CMAKE_CFG_INTDIR}/pymantidplot/future
+                            MTDPLOT_FUTURE_INSTALL_FILES )
 
 # IPython scripts
 set( IPY_FILES
@@ -877,7 +887,7 @@ copy_files_to_dir ( "${IPY_FILES}"
 add_executable ( MantidPlot ${WIN_CONSOLE} MACOSX_BUNDLE ${ALL_SRC} src/main.cpp
 							${INC_FILES} ${QTIPLOT_C_SRC} ${UI_HDRS}
 							${RES_FILES} ${MANTID_RC_FILE}
-              ${PYTHON_INSTALL_FILES} ${MTDPLOT_INSTALL_FILES} ${IPYTHON_INSTALL_FILES} ${CONFIG_RESET_SCRIPT_FILE}
+							${PYTHON_INSTALL_FILES} ${MTDPLOT_INSTALL_FILES} ${CONFIG_RESET_SCRIPT_FILE} ${MTDPLOT_FUTURE_INSTALL_FILES} ${IPYTHON_INSTALL_FILES}
 )
 
 # Library dependencies
@@ -894,6 +904,9 @@ target_link_libraries ( MantidPlot
 # Plugin dependencies
 add_dependencies( MantidPlot mantidqtpython )
 
+if (OSX_VERSION VERSION_GREATER 10.8)
+  set_target_properties(MantidPlot PROPERTIES INSTALL_RPATH "@executable_path/")
+endif ()
 
 ###########################################################################
 # Custom Info.plist file for OS X
@@ -939,17 +952,18 @@ endif( WIN32 )
 
 # List of .py files than must be run WITHIN MantidPlot.
 set ( MANTIDPLOT_TEST_PY_FILES
-        MantidPlotAlgorithmDialogTest.py
-        MantidPlotInstrumentViewTest.py
-	MantidPlotSliceViewerTest.py
-	MantidPlot1DPlotTest.py
-        MantidPlot2DPlotTest.py
-        MantidPlotProxiesTest.py
-	MantidPlotPythonImportTest.py
-	MantidPlotFoldersTest.py 
-	MantidPlotMdiSubWindowTest.py 
-	MantidPlotTiledWindowTest.py 
-        MantidPlotInputArgsCheck.py
+    MantidPlotAlgorithmDialogTest.py
+    MantidPlotInstrumentViewTest.py
+    MantidPlotSliceViewerTest.py
+    MantidPlot1DPlotTest.py
+    MantidPlot2DPlotTest.py
+    MantidPlotProxiesTest.py
+    MantidPlotPythonImportTest.py
+    MantidPlotFoldersTest.py
+    MantidPlotMdiSubWindowTest.py
+    MantidPlotTiledWindowTest.py
+    MantidPlotInputArgsCheck.py
+    MantidPlotFuturePyplotGeneralTest.py
 )
 
 if ( 0 )
@@ -991,9 +1005,12 @@ else ()
 	# Make a ctest target for each file
 	foreach  ( PYFILE ${MANTIDPLOT_TEST_PY_FILES} )
 	 	# Add the test. Name of test = name of the file
-		ADD_TEST( ${PYFILE} ${MANTIDPLOT_PATH} -xq ${CMAKE_CURRENT_SOURCE_DIR}/test/${PYFILE} )
+		add_test ( ${PYFILE} ${MANTIDPLOT_PATH} -xq ${CMAKE_CURRENT_SOURCE_DIR}/test/${PYFILE} )
 		# Set the previously-built environment
-		set_tests_properties( ${PYFILE} PROPERTIES ENVIRONMENT "${TEST_ENVIRONMENT}")
+		set_tests_properties ( ${PYFILE} PROPERTIES
+                           RUN_SERIAL 1
+                           ENVIRONMENT "${TEST_ENVIRONMENT}"
+                           TIMEOUT ${TESTING_TIMEOUT} )
 	endforeach ()
 
     add_dependencies( GUITests MantidPlot )
@@ -1010,19 +1027,37 @@ install ( TARGETS MantidPlot RUNTIME DESTINATION ${BIN_DIR}
 # Ship required files. Explicit so some can be disabled easily if necessary
 install ( FILES ${PY_FILES} DESTINATION ${BIN_DIR} )
 foreach(PY_FILE ${MTDPLOTPY_FILES} )
-  install ( FILES mantidplotpy/${PY_FILE} DESTINATION ${BIN_DIR}/mantidplotpy )
+  install ( FILES pymantidplot/${PY_FILE} DESTINATION ${BIN_DIR}/pymantidplot )
+endforeach()
+foreach(FUT_PY_FILE ${FUTURE_FILES} )
+  install ( FILES pymantidplot/future/${FUT_PY_FILE} DESTINATION ${BIN_DIR}/pymantidplot/future )
 endforeach()
 foreach(PY_FILE ${IPY_FILES} )
   install ( FILES ipython_widget/${PY_FILE} DESTINATION ${BIN_DIR}/ipython_widget )
 endforeach()
 install ( FILES ${CONFIG_RESET_SCRIPT} DESTINATION ${BIN_DIR} )
 
+# file make_package.rb contains hard-coded path to the libraries
+# this causes fail of the installation with macports
+# therefore MACPORTS option is introduced
 if ( APPLE )
-  configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/FixBundle.cmake.in
+  if (OSX_VERSION VERSION_LESS 10.9)
+    configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/FixBundle.cmake.in
                    ${CMAKE_CURRENT_BINARY_DIR}/FixBundle.cmake
-                   @ONLY
-  )
+                   @ONLY )
 
-  install ( SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/FixBundle.cmake )
+    install ( SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/FixBundle.cmake )
+  elseif (MACPORTS)
+        install ( FILES  package_python_macports.py DESTINATION MantidPlot.app/ )
+        configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/FixMacportsBundle.cmake.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/FixMacportsBundle.cmake
+                   @ONLY )
+        install ( SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/FixMacportsBundle.cmake )
+  else ()
+    install ( FILES  make_package.rb DESTINATION MantidPlot.app/ )
+    configure_file ( ${CMAKE_CURRENT_SOURCE_DIR}/FixMavericksBundle.cmake.in
+                   ${CMAKE_CURRENT_BINARY_DIR}/FixMavericksBundle.cmake
+                   @ONLY )
+    install ( SCRIPT ${CMAKE_CURRENT_BINARY_DIR}/FixMavericksBundle.cmake )
+  endif ()
 endif ()
-

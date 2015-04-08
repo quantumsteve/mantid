@@ -239,8 +239,10 @@ void PythonScript::emit_error()
 
   // return early if nothing happened
   if (!PyErr_Occurred())
+  {
+    emit finished(MSG_FINISHED);
     return;
-
+  }
   // get the error information out
   PyObject *exception(NULL), *value(NULL), *traceback(NULL);
   PyErr_Fetch(&exception, &value, &traceback);
@@ -684,7 +686,7 @@ namespace
     }
   private:
     InstallTrace();
-    Q_DISABLE_COPY(InstallTrace);
+    Q_DISABLE_COPY(InstallTrace)
     PyObject *m_sipWrappedScript;
   };
 }

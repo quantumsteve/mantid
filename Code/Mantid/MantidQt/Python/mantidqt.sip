@@ -10,6 +10,12 @@
 // Define the module name. This has to match the library filename
 %Module mantidqtpython
 
+%UnitCode
+  #if defined(__GNUC__) && !(defined(__INTEL_COMPILER))
+    #pragma GCC system_header
+  #endif
+%End
+
 /******************************** SIP Imports ****************/
 %Import QtCore/QtCoremod.sip
 %Import QtGui/QtGuimod.sip
@@ -1390,3 +1396,31 @@ public:
 }; // end namespace MantidWidgets
 }; // end namespace MantidQt
 
+
+namespace MantidQt
+{
+namespace MantidWidgets
+{
+
+class SlitCalculator : QDialog
+{
+%TypeHeaderCode
+#include "MantidQtMantidWidgets/SlitCalculator.h"
+%End
+%Docstring
+
+SlitCalculator
+==============
+
+    The SlitCalculator is a control for interacting with the CalculateSlits algorithm.
+
+%End
+
+public:
+  SlitCalculator(QWidget* parent);
+  virtual ~SlitCalculator();
+
+};
+
+}; // end namespace MantidWidgets
+}; // end namespace MantidQt

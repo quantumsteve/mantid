@@ -1,5 +1,5 @@
 Name:           mantid-developer
-Version:        1.6
+Version:        1.10
 Release:        1%{?dist}
 Summary:        Meta Package to install dependencies for Mantid Development
 
@@ -9,7 +9,7 @@ License:        GPL
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %{?fc20:Requires: rpmfusion-nonfree-release}
-Requires: cmake-gui >= 2.8.5
+Requires: cmake-gui >= 2.8.12
 Requires: boost-devel
 %{?el6:Requires: epel-release}
 Requires: gperftools-devel
@@ -30,7 +30,8 @@ Requires: poco-devel
 Requires: PyQt4-devel
 Requires: python-devel
 Requires: python-ipython >= 1.1
-Conflicts: python-ipython >= 2.0
+%{?el6:Conflicts: python-ipython >= 2.0}
+Requires: python-pip
 Requires: python-sphinx
 Requires: qscintilla-devel
 Requires: qt-devel >= 4.6
@@ -63,6 +64,7 @@ Requires: scl-utils
 Requires: qt-devel
 Requires: qtwebkit-devel
 %endif
+Requires: graphviz
 
 BuildArch: noarch
 
@@ -85,6 +87,9 @@ required for Mantid development.
 %files
 
 %changelog
+* Thu Feb 12 2015 Harry Jeffery <henry.jeffery@stfc.ac.uk>
+- Added graphviz dependency
+
 * Wed Aug 13 2014 Peter Peterson <petersonpf@ornl.gov>
 - Merged all three distribution spec files into one
 

@@ -1,10 +1,8 @@
+#pylint: disable=no-init
 from mantid.simpleapi import *
 from mantid.api import *
 from mantid.kernel import *
 from mantid import config
-
-import os.path, math
-
 
 class MSGDiffractionReduction(PythonAlgorithm):
 
@@ -40,7 +38,7 @@ class MSGDiffractionReduction(PythonAlgorithm):
         self.declareProperty(name='RebinParam', defaultValue='',
                              doc='Rebin parameters.')
 
-        self.declareProperty(WorkspaceGroupProperty('OutputWorkspace', '',
+        self.declareProperty(WorkspaceGroupProperty('OutputWorkspace', '',\
                              direction=Direction.Output),
                              doc='Group name for the result workspaces.')
 
@@ -79,10 +77,7 @@ class MSGDiffractionReduction(PythonAlgorithm):
 
 
     def PyExec(self):
-        from IndirectCommon import StartTime, EndTime
         from IndirectDiffractionReduction import MSGDiffractionReducer
-
-        StartTime('MSGDiffractionReduction')
 
         input_files = self.getProperty('InputFiles').value
         sum_files = self.getProperty('SumFiles').value
@@ -120,8 +115,6 @@ class MSGDiffractionReduction(PythonAlgorithm):
         result_ws_list = reducer.get_result_workspaces()
         GroupWorkspaces(InputWorkspaces=result_ws_list, OutputWorkspace=output_ws_group)
         self.setProperty('OutputWorkspace', output_ws_group)
-
-        EndTime('MSGDiffractionReduction')
 
 
 AlgorithmFactory.subscribe(MSGDiffractionReduction)
