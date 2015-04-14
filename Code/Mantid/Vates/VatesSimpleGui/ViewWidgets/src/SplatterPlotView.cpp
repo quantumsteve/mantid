@@ -201,6 +201,15 @@ void SplatterPlotView::render()
   pqDataRepresentation *drep = builder->createDataRepresentation(\
            src->getOutputPort(0), this->view);
   vtkSMPropertyHelper(drep->getProxy(), "Representation").Set(renderType.toStdString().c_str());
+
+  // If the loaded source is the splatterplot source, then set the associated representation to the origRep
+  if (src == this->splatSource)
+  {
+    this->origRep = qobject_cast<pqPipelineRepresentation*>(drep);
+  }
+
+
+
   if (!isPeaksWorkspace)
   {
     vtkSMPropertyHelper(drep->getProxy(), "PointSize").Set(1);
