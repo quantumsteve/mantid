@@ -18,6 +18,7 @@
 #include <pqMultiSliceView.h>
 #include <pqObjectBuilder.h>
 #include <pqPipelineSource.h>
+#include <pqPipelineRepresentation.h>
 #include <pqRenderView.h>
 #include <pqServerManagerModel.h>
 #include <vtkContextMouseEvent.h>
@@ -81,6 +82,7 @@ void MultiSliceView::setupData()
     this->origSrc->getOutputPort(0), this->mainView);
     vtkSMPropertyHelper(drep->getProxy(), "Representation").Set("Slices");
     drep->getProxy()->UpdateVTKObjects();
+    this->origRep = qobject_cast<pqPipelineRepresentation*>(drep);
   }
 }
 
