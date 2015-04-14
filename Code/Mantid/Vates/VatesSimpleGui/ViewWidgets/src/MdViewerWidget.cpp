@@ -998,6 +998,18 @@ void MdViewerWidget::switchViews(ModeControlWidget::Views v)
   this->initialView = v; 
   this->setDestroyedListener();
   this->currentView->setVisibilityListener();
+
+  // We need to reset the proxies panel 
+  pqPipelineSource *source = this->currentView->origSrc;
+  pqPipelineRepresentation *repr = this->currentView->origRep;
+
+  if (source != NULL && repr != NULL)
+  {
+    this->ui.proxiesPanel->clear();
+    this->ui.proxiesPanel->addProxy(source->getProxy(),"datasource",QStringList(),true);
+    this->ui.proxiesPanel->addProxy(repr->getProxy(),"display",QStringList("CubeAxesVisibility"),true);
+    this->ui.proxiesPanel->updateLayout();
+  }
 }
 
 /**
