@@ -131,8 +131,12 @@ if (OSX_VERSION VERSION_GREATER 10.8)
   set_target_properties ( ${PROJECT_NAME} PROPERTIES INSTALL_RPATH "@loader_path/../MacOS")
 endif ()
 
-target_link_libraries ( ${PROJECT_NAME} ${QT_LIBRARIES} )
-
+if ( MSVC )
+  target_link_libraries ( ${PROJECT_NAME} ${TCMALLOC_LIBRARIES} ${QT_LIBRARIES} )
+else ()
+  target_link_libraries ( ${PROJECT_NAME} ${QT_LIBRARIES} )
+endif()
+  
 if ( WIN32 )
   add_definitions ( -DQT_QTPROPERTYBROWSER_EXPORT )
 endif ( WIN32 )

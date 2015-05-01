@@ -46,7 +46,10 @@ endif ()
 # Might just as well link everything to Boost & Poco (found in CommonSetup)
 # Boost_LIBRARIES variable is redefined by MPISetup so capture the value here
 # and just add MPI stuff if required
-set ( MANTIDLIBS  ${Boost_LIBRARIES} ${POCO_LIBRARIES} )
+if ( MSVC )
+  set ( MANTIDLIBS ${TCMALLOC_LIBRARIES} )
+endif()
+set ( MANTIDLIBS  ${MANTIDLIBS} ${Boost_LIBRARIES} ${POCO_LIBRARIES} )
 
 ###########################################################################
 # MPI-enable build setup
