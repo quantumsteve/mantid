@@ -332,7 +332,7 @@ ANNkd_tree::ANNkd_tree( // basic constructor
 //						ANNcoord &cut_val, // cutting
 // value
 //						int &n_lo)		   //
-//no.
+// no.
 // of
 // points
 // on low side of cut
