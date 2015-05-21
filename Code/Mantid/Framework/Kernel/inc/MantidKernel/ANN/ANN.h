@@ -52,7 +52,7 @@
 //			Arya and Mount, ``Algorithms for fast vector
 // quantization,''
 //				Proc. of DCC '93: Data Compression Conference,
-//eds.
+// eds.
 // J.
 // A.
 //				Storer and M. Cohn, IEEE Press, 1993, 381-390.
@@ -744,7 +744,7 @@ const int ANN_N_SHRINK_RULES = 4; // number of shrink rules
 //		dim						Dimension of
 // space
 //		n_pts					Number of points
-//currently
+// currently
 // in
 // the tree
 //		n_max					Maximum number of points
@@ -752,7 +752,7 @@ const int ANN_N_SHRINK_RULES = 4; // number of shrink rules
 // are allowed
 //								in the tree
 //		bkt_size				Maximum bucket size (no.
-//of
+// of
 // points
 // per leaf)
 //		bnd_box_lo				Bounding box low point

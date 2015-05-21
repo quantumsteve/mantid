@@ -93,7 +93,7 @@ public:
         boost::dynamic_pointer_cast<DataObjects::GroupingWorkspace>(
             API::AnalysisDataService::Instance().retrieve("GroupPowder"));
 
-    TS_ASSERT_DELTA(gws2->dataY(0)[0], 13.0, 1.0E-5); // 130.6 degrees
+    TS_ASSERT_DELTA(gws2->dataY(0)[0], 13.0, 1.0E-5);    // 130.6 degrees
     TS_ASSERT_DELTA(gws2->dataY(10000)[0], 9.0, 1.0E-5); // 97.4 degrees
     TS_ASSERT_DELTA(gws2->dataY(20000)[0], 6.0, 1.0E-5); // 62.9 degrees
     TS_ASSERT_DELTA(gws2->dataY(30000)[0], 2.0, 1.0E-5); // 27.8 degrees

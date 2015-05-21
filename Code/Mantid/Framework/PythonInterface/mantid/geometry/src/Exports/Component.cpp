@@ -61,15 +61,15 @@ void export_Component()
            Component_getParameterType())
       //// this does not work for some obvious or not obvious reasons
       //.def("getParameter", &Component::getNumberParameter,
-      //Component_getNumberParameter())
+      // Component_getNumberParameter())
       //.def("getParameter", &Component::getBoolParameter,
-      //Component_getBoolParameter())
+      // Component_getBoolParameter())
       //.def("getParameter", &Component::getStringParameter,
-      //Component_getStringParameter())
+      // Component_getStringParameter())
       //.def("getParameter", &Component::getPositionParameter,
-      //Component_getPositionParameter())
+      // Component_getPositionParameter())
       //.def("getParameter", &Component::getRotationParameter,
-      //Component_getRotationParameter())
+      // Component_getRotationParameter())
 
       ;
 }

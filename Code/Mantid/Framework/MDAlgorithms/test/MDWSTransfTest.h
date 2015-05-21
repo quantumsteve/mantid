@@ -282,7 +282,7 @@ public:
     //     // crystal misalighned -- this test does not fully holds
     //     Mantid::Kernel::Matrix<double> Uhor(3,3,true);
     ////    Horace Umatrix build on the coordinate system, constructed aroung
-    ///two vectors u=[0.9,0.1,0] and v=[0.1,0.9,0.1]
+    /// two vectors u=[0.9,0.1,0] and v=[0.1,0.9,0.1]
     //     // 0.9939   0.1104  0.00
     //     //-0.1097   0.9876  0.1125
     //    //  0.0124  -0.1118  0.9937
@@ -344,7 +344,7 @@ public:
     ws2D->mutableSample().setOrientedLattice(&latt);
     //
     //[transf,u_to_rlu]=calc_proj_matrix([7.9250,7.3200,7.0650],
-    //90.0550,95.2170,103.4200, u, v, 0, omega, dpsi, gl, gs)
+    // 90.0550,95.2170,103.4200, u, v, 0, omega, dpsi, gl, gs)
     // u to rlu
     // 1.2215   -0.2928  -0.1147
     //    0    1.1650   -0.0011

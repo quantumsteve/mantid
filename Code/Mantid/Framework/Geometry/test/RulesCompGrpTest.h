@@ -100,10 +100,10 @@ public:
     TS_ASSERT_EQUALS(A.leaf(0), uSC);
     TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 0.0, 0.0)),
                      false); // inside the sphere and cylinder
-    TS_ASSERT_EQUALS(A.isValid(V3D(4.1, 0.0, 0.0)), true); // outside sphere
+    TS_ASSERT_EQUALS(A.isValid(V3D(4.1, 0.0, 0.0)), true);  // outside sphere
     TS_ASSERT_EQUALS(A.isValid(V3D(4.0, 0.0, 0.0)), false); // on sphere
     TS_ASSERT_EQUALS(A.isValid(V3D(3.9, 0.0, 0.0)), false); // inside sphere
-    TS_ASSERT_EQUALS(A.isValid(V3D(1.1, 4.0, 0.0)), true); // outside cylinder
+    TS_ASSERT_EQUALS(A.isValid(V3D(1.1, 4.0, 0.0)), true);  // outside cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(1.0, 4.0, 0.0)), false); // on cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(0.9, 4.0, 0.0)), false); // inside cylinder
   }
@@ -154,6 +154,6 @@ private:
   }
 };
 //---------------------------------End of
-//CompGrp----------------------------------------
+// CompGrp----------------------------------------
 
 #endif

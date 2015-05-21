@@ -55,26 +55,26 @@ public:
   /// Test transformation of possible combinations of archive paths.
   /// Ensures the path is transformed into the correct OS dependent path.
   void testTransformPath() {
-    const std::string
-        facilitiesXml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
-                        "<facilities>"
-                        "<facility name=\"ISIS\">"
-                        "<catalog name=\"ICat3Catalog\">"
-                        "<soapendpoint "
-                        "url=\"https://facilities01.esc.rl.ac.uk:443/"
-                        "ICATService/ICAT\"></soapendpoint>"
-                        "<filelocation>"
-                        "<prefix "
-                        "regex=\"\\\\\\\\isis\\\\inst\\$\\\\Instruments\\$\"></"
-                        "prefix>" // Same regex from facilities.xml, lots of "\"
-                                  // character escaping.
-                        "<windows replacement=\"\"></windows>"
-                        "<linux replacement=\"/archive\"></linux>"
-                        "<mac replacement=\"/archive\"></mac>"
-                        "</filelocation>"
-                        "</catalog>"
-                        "</facility>"
-                        "</facilities>";
+    const std::string facilitiesXml =
+        "<?xml version=\"1.0\" encoding=\"UTF-8\"?>"
+        "<facilities>"
+        "<facility name=\"ISIS\">"
+        "<catalog name=\"ICat3Catalog\">"
+        "<soapendpoint "
+        "url=\"https://facilities01.esc.rl.ac.uk:443/"
+        "ICATService/ICAT\"></soapendpoint>"
+        "<filelocation>"
+        "<prefix "
+        "regex=\"\\\\\\\\isis\\\\inst\\$\\\\Instruments\\$\"></"
+        "prefix>" // Same regex from facilities.xml, lots of "\"
+                  // character escaping.
+        "<windows replacement=\"\"></windows>"
+        "<linux replacement=\"/archive\"></linux>"
+        "<mac replacement=\"/archive\"></mac>"
+        "</filelocation>"
+        "</catalog>"
+        "</facility>"
+        "</facilities>";
 
     CatalogInfo *catalogInfo = NULL;
     TS_ASSERT_THROWS_NOTHING(catalogInfo = getCatalogFromXML(facilitiesXml));

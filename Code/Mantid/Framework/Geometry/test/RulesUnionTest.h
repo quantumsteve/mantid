@@ -31,7 +31,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -51,7 +51,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -71,7 +71,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -94,7 +94,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -119,7 +119,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -143,7 +143,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -163,7 +163,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -186,7 +186,7 @@ public:
     SurfPoint *S1, *S2, S3;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -209,7 +209,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -233,7 +233,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -259,7 +259,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();
@@ -284,7 +284,7 @@ public:
     SurfPoint *S1, *S2;
     Plane *P1 = new Plane;
     Sphere *Sp1 = new Sphere;
-    P1->setSurface("px 5"); // yz plane with x=5
+    P1->setSurface("px 5");             // yz plane with x=5
     Sp1->setSurface("s 5.0 0.0 0.0 5"); // a sphere with center (5,0,0) and
                                         // radius 5. this will touch origin
     S1 = new SurfPoint();

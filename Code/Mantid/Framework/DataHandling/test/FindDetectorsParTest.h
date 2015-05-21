@@ -103,8 +103,8 @@ public:
     TS_ASSERT_EQUALS(3, inputWS->getNumberHistograms());
 
     std::vector<std::string> pattern(5);
-    pattern[2] = "1,2,3,"; // dist
-    pattern[0] = "2,3,4,"; // azimutal
+    pattern[2] = "1,2,3,";    // dist
+    pattern[0] = "2,3,4,";    // azimutal
     pattern[1] = "-3,-4,-5,"; // polar
     pattern[3] =
         "78.6901,71.5651,66.8014,"; // atan(5,6,7)/dist;    // pol_width

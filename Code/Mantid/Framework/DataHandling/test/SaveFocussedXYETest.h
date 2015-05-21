@@ -340,8 +340,8 @@ public:
       is >> x >> y >> e;
       switch (bin_no) {
       case 1:
-        TS_ASSERT_DELTA(x, 2.0, m_tol); // center of the bin
-        TS_ASSERT_DELTA(y, 2.0, m_tol); // width (2.0)
+        TS_ASSERT_DELTA(x, 2.0, m_tol);              // center of the bin
+        TS_ASSERT_DELTA(y, 2.0, m_tol);              // width (2.0)
         TS_ASSERT_DELTA(e, 1.41421356 * 1.0, m_tol); // error (sqrt(2)
         break;
       case 2:

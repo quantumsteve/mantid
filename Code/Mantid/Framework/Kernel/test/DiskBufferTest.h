@@ -369,7 +369,7 @@ public:
   }
 
   ///** Disabled because it is not necessary to defrag since that happens on the
-  ///fly */
+  /// fly */
   // void xtest_defragFreeBlocks()
   //{
   //  DiskBuffer dbuf(3);

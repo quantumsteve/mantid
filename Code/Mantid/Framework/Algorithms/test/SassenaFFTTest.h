@@ -290,7 +290,7 @@ private:
   } // void  createGroupWorkspace
 
   Algorithms::SassenaFFT m_alg;
-  const double T2ueV; // conversion factor from Kelvin to ueV
+  const double T2ueV;  // conversion factor from Kelvin to ueV
   const double ps2meV; // conversion factor from picosecond to micro-eV
   const size_t nbins;
 }; // class ApplyDetailedBalanceTest

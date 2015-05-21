@@ -153,14 +153,14 @@ private:
   DataObjects::Workspace2D_sptr createTestWorkspace() {
 
     // create test ws
-    const size_t nHist = 10; // or testWS->getNumberHistograms();
+    const size_t nHist = 10;  // or testWS->getNumberHistograms();
     const size_t nBins = 101; // or testWS->blocksize();
     DataObjects::Workspace2D_sptr testWS =
         WorkspaceCreationHelper::create2DWorkspaceWithFullInstrument(
             nHist, nBins, false, false, true, std::string("testInstEmpty"));
     testWS->getAxis(0)->setUnit("Empty");
     API::Run &run = testWS->mutableRun();
-    run.addProperty<double>("wavelength", 5.0, true); // overwrite
+    run.addProperty<double>("wavelength", 5.0, true);     // overwrite
     run.addProperty<double>("channel_width", 30.0, true); // overwrite
 
     for (size_t i = 0; i < nHist; ++i) {

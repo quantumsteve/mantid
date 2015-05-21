@@ -37,7 +37,7 @@ public:
     TS_ASSERT_EQUALS(tree->display(), "10 : 10 : 12 : 11");
     TS_ASSERT_EQUALS(tree->removeComplementary(tree), 1);
     //		TS_ASSERT_EQUALS(tree->display(),"10 : 12 : 11"); //Problem: The
-    //comments don't match to the functionaility it is supposed to do
+    // comments don't match to the functionaility it is supposed to do
     delete tree;
   }
 

@@ -20,7 +20,7 @@ using namespace Geometry;
 using Mantid::Kernel::V3D;
 
 //---------------------------------End of
-//CompGrp----------------------------------------
+// CompGrp----------------------------------------
 class RulesBoolValueTest : public CxxTest::TestSuite {
 public:
   void testConstructor() {

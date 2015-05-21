@@ -18,8 +18,8 @@ public:
     TS_ASSERT_EQUALS(A.isNull(), 1);
     TS_ASSERT_EQUALS(A.isSimple(), 1);
     TS_ASSERT_EQUALS(A.isSingle(), 1); // Return 1 if its 0 or 1 items
-    TS_ASSERT_EQUALS(A.isDNF(), 1); // Return 1 if its 0 items
-    TS_ASSERT_EQUALS(A.isCNF(), 1); // Return 1 if its 0 items
+    TS_ASSERT_EQUALS(A.isDNF(), 1);    // Return 1 if its 0 items
+    TS_ASSERT_EQUALS(A.isCNF(), 1);    // Return 1 if its 0 items
     TS_ASSERT_EQUALS(A.size().first, 0);
     TS_ASSERT_EQUALS(A.size().second, 0);
   }

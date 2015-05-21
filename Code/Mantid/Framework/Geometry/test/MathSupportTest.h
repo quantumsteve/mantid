@@ -16,7 +16,7 @@ using namespace Mantid;
 using namespace mathSupport;
 class MathSupportTest : public CxxTest::TestSuite {
 public:
-  void testSolveQuadratic() { // Test quadratic solution
+  void testSolveQuadratic() {    // Test quadratic solution
     double xp1w2[3] = {1, 2, 1}; //(x+1)^2 one solution
     std::pair<std::complex<double>, std::complex<double>> output;
     TS_ASSERT_EQUALS(solveQuadratic(xp1w2, output), 1);

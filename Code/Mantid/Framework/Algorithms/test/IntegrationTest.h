@@ -544,9 +544,9 @@ public:
   }
 
 private:
-  Integration alg;  // Test with range limits
-  Integration alg2; // Test without limits
-  Integration alg3; // Test with range and partial bins
+  Integration alg;        // Test with range limits
+  Integration alg2;       // Test without limits
+  Integration alg3;       // Test with range and partial bins
   Integration algNoCrash; // test for integration inside bin
   std::string outputSpace;
 };

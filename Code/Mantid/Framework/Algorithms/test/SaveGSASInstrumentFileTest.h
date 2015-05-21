@@ -494,7 +494,7 @@ public:
     }
 
     // Reset file stream pointer
-    file1.clear(); // add
+    file1.clear();            // add
     file1.seekg(0, ios::beg); // add
 
     file2.clear();

@@ -320,19 +320,20 @@ ANNkd_tree::ANNkd_tree( // basic constructor
 // current
 // cell
 //						int n,			   //
-//number
+// number
 // of
 // points
 //						int dim,		   //
-//dimension
+// dimension
 // of
 // space
 //						int &cut_dim,	   // cutting
 // dimension
 //						ANNcoord &cut_val, // cutting
 // value
-//						int &n_lo)		   // no.
-//of
+//						int &n_lo)		   //
+//no.
+// of
 // points
 // on low side of cut
 //

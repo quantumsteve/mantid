@@ -25,7 +25,7 @@ private:
   /// Run CalculateFlatBackground with options specific to the function calling
   /// it. Each function has a preset relating to that specific test's needs.
   ///@param functindex - an integer identifying the function running the
-  ///algorithm in order to set the properties
+  /// algorithm in order to set the properties
   void runCalculateFlatBackground(int functindex) {
     // functindex key
     // 1 = exec

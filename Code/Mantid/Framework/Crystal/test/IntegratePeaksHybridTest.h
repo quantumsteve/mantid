@@ -211,7 +211,7 @@ public:
         make_peak_and_mdew(hklValues, -10, 10, peakRadius, nEventsInPeak);
 
     //-------- Execute the integration. Tight radius, so Background threshold
-    //will be very high. As a result, integrated value should be low.
+    // will be very high. As a result, integrated value should be low.
     AlgorithmOutputs integratedWorkspaces1 =
         execute_integration(inputWorkspaces, peakRadius * 1.5, nBins);
     //-------- Execute the integration. Less conservative radius.

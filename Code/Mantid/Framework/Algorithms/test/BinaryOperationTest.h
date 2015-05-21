@@ -272,9 +272,9 @@ public:
       rhs[i / 6].push_back(i);
     }
     auto table = do_test_buildBinaryOperationTable(lhs, rhs, false);
-    TS_ASSERT_EQUALS((*table)[0], 0); // 0-3 go into 0-5
+    TS_ASSERT_EQUALS((*table)[0], 0);  // 0-3 go into 0-5
     TS_ASSERT_EQUALS((*table)[1], -1); // 4-7 fails to go anywhere
-    TS_ASSERT_EQUALS((*table)[2], 1); // 8-11 goes into 6-11
+    TS_ASSERT_EQUALS((*table)[2], 1);  // 8-11 goes into 6-11
   }
 
   void test_buildBinaryOperationTable_simpleLHS_by_groupedRHS_large() {

@@ -84,7 +84,7 @@ void SavePDFGui::exec() {
 
   // --------- write the header in the style of
   //#Comment: neutron, Qmin=0.5, Qmax=31.42, Qdamp=0.017659, Qbroad= 0.0191822,
-  //Temperature = 300
+  // Temperature = 300
   out << "#Comment: neutron";
   auto run = inputWS->run();
   if (run.hasProperty("Qmin")) {

@@ -868,7 +868,7 @@ public:
 
   ////-------------------------------------------------------------------------------------
   ///** Tests add_events with limits into the vectorthat bad events are thrown
-  ///out when using addEvents.
+  /// out when using addEvents.
   // * */
   // void xest_addEvents_start_stop()
   //{

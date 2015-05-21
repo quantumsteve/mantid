@@ -143,10 +143,10 @@ public:
                      false); // on end of cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(-3.1, 0.0, 0.0)),
                      false); // inside the cylinder
-    TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 3.1, 0.0)), true); // outside cylinder
+    TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 3.1, 0.0)), true);  // outside cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 3.0, 0.0)), false); // on the cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 2.9, 0.0)), false); // inside cylinder
-    TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 0.0, 3.1)), true); // outside cylinder
+    TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 0.0, 3.1)), true);  // outside cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 0.0, 3.0)), false); // on the cylinder
     TS_ASSERT_EQUALS(A.isValid(V3D(0.0, 0.0, 2.9)), false); // inside cylinder
   }
@@ -214,6 +214,6 @@ private:
   }
 };
 //---------------------------------End of
-//CompObj----------------------------------------
+// CompObj----------------------------------------
 
 #endif

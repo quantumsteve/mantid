@@ -820,7 +820,7 @@ public:
       this->fake_uniform_data();
       el.switchTo(static_cast<EventType>(this_type));
 
-      this->test_setX(); // Set it up
+      this->test_setX();       // Set it up
       const EventList el3(el); // need to copy to a const method in order to
                                // access the data directly.
       MantidVec X = el3.constDataX();
@@ -1036,7 +1036,7 @@ public:
     // This one has a weight of 2.0, error is 2.5
     this->fake_uniform_data_weights();
 
-    this->test_setX(); // Set it up
+    this->test_setX();       // Set it up
     const EventList el3(el); // need to copy to a const method in order to
                              // access the data directly.
     MantidVec X = el3.constDataX();

@@ -852,19 +852,17 @@ public:
 
     // Bin the binned output with more translation and scaling,
     // but it still ends up binning A from (-10 to 10) with 10 bins.
-    FrameworkManager::Instance()
-        .exec(
-            "BinMD", 20, "InputWorkspace", "B", "OutputWorkspace", "C",
-            "AxisAligned", "0", "BasisVector0",
-            "ttx,m, 2.0, 0.0", /* size 2 in B = size 4 in A */
-            "BasisVector1", "tty,m, 0.0, 2.0", "NormalizeBasisVectors", "0",
-            "ForceOrthogonal", "0", "Translation",
-            "-1, -1", /* coords in B = (-4,-4) in A */
-            "OutputExtents",
-            "-1.5, 3.5, -1.5, 3.5", /* size of 5 in C = size of 10 in B = size
-                                       of 20 in A */
-            "OutputBins",
-            "10,10");
+    FrameworkManager::Instance().exec(
+        "BinMD", 20, "InputWorkspace", "B", "OutputWorkspace", "C",
+        "AxisAligned", "0", "BasisVector0",
+        "ttx,m, 2.0, 0.0", /* size 2 in B = size 4 in A */
+        "BasisVector1", "tty,m, 0.0, 2.0", "NormalizeBasisVectors", "0",
+        "ForceOrthogonal", "0", "Translation",
+        "-1, -1", /* coords in B = (-4,-4) in A */
+        "OutputExtents",
+        "-1.5, 3.5, -1.5, 3.5", /* size of 5 in C = size of 10 in B = size
+                                   of 20 in A */
+        "OutputBins", "10,10");
 
     // Finally, C maps back onto A (mdew) binned as reference
     do_compare_histo("reference", "C", "mdew");

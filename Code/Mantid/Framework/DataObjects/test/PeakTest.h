@@ -147,10 +147,8 @@ public:
     // 1 angstroms wavelength, and at the opposite corner of the detector
     Peak p(inst, 19999, 1.0);
     // Energy in meV
-    TS_ASSERT_DELTA(
-        p.getInitialEnergy(), 81.805,
-        1e-3) // Conversion table at :
-              // www.ncnr.nist.gov/instruments/dcs/dcs_usersguide/Conversion_Factors.pdf
+    TS_ASSERT_DELTA(p.getInitialEnergy(), 81.805, 1e-3) // Conversion table at :
+    // www.ncnr.nist.gov/instruments/dcs/dcs_usersguide/Conversion_Factors.pdf
     TS_ASSERT_DELTA(p.getFinalEnergy(), p.getInitialEnergy(), 1e-5)
     V3D dp = p.getDetPos();
     double tt = dp.angle(V3D(0, 0, 1));

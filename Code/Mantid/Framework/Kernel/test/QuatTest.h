@@ -412,7 +412,7 @@ public:
     Mantid::Kernel::V3D rY(0, 1, 0);
     Mantid::Kernel::V3D rZ(0, 0, 1);
     q(rX, rY, rZ);
-    p(1, 0, 0, 0); // Identity quaternion
+    p(1, 0, 0, 0);     // Identity quaternion
     TS_ASSERT(p == q); // Trivial rotation
   }
 

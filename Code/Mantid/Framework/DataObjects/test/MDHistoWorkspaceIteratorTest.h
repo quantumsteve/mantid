@@ -248,11 +248,11 @@ public:
         new WritableHistoWorkspace(MDHistoDimension_sptr(
             new MDHistoDimension("x", "x", "m", 0.0, 10, 100)));
 
-    ws->setMaskValueAt(0, true); // Mask the first bin
-    ws->setMaskValueAt(1, true); // Mask the second bin
+    ws->setMaskValueAt(0, true);  // Mask the first bin
+    ws->setMaskValueAt(1, true);  // Mask the second bin
     ws->setMaskValueAt(2, false); // NOT MASKED
-    ws->setMaskValueAt(3, true); // Mask the second bin
-    ws->setMaskValueAt(4, true); // Mask the second bin
+    ws->setMaskValueAt(3, true);  // Mask the second bin
+    ws->setMaskValueAt(4, true);  // Mask the second bin
     ws->setMaskValueAt(5, false); // NOT MASKED
 
     Mantid::DataObjects::MDHistoWorkspace_sptr ws_sptr(ws);
