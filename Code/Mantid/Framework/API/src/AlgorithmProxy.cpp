@@ -146,8 +146,8 @@ void AlgorithmProxy::addObserver(const Poco::AbstractObserver &observer) const {
 /** Remove an observer.
 *  @param observer :: Observer
 */
-void
-AlgorithmProxy::removeObserver(const Poco::AbstractObserver &observer) const {
+void AlgorithmProxy::removeObserver(
+    const Poco::AbstractObserver &observer) const {
   std::vector<const Poco::AbstractObserver *>::iterator o = std::find(
       m_externalObservers.begin(), m_externalObservers.end(), &observer);
   if (o != m_externalObservers.end())

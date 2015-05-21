@@ -337,10 +337,9 @@ void CalculateMSVesuvio::calculateMS(const size_t wsIndex,
  * @param simulCounts Simulation object used to storing the calculated number of
  * counts
  */
-void
-CalculateMSVesuvio::simulate(const DetectorParams &detpar,
-                             const ResolutionParams &respar,
-                             MSVesuvioHelper::Simulation &simulCounts) const {
+void CalculateMSVesuvio::simulate(
+    const DetectorParams &detpar, const ResolutionParams &respar,
+    MSVesuvioHelper::Simulation &simulCounts) const {
   for (size_t i = 0; i < m_nevents; ++i) {
     calculateCounts(detpar, respar, simulCounts);
   }

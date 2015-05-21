@@ -100,20 +100,22 @@ protected:
   void exec();
 
 private:
-  void loadData(size_t hist, specid_t &i, specid_t specNo, 
+  void loadData(size_t hist, specid_t &i, specid_t specNo,
                 MuonNexusReader &nxload, const int64_t lengthIn,
                 DataObjects::Workspace2D_sptr localWorkspace);
   void runLoadMappingTable(DataObjects::Workspace2D_sptr);
   void runLoadLog(DataObjects::Workspace2D_sptr);
   void loadRunDetails(DataObjects::Workspace2D_sptr localWorkspace);
-  void addPeriodLog(DataObjects::Workspace2D_sptr localWorkspace, int64_t period);
+  void addPeriodLog(DataObjects::Workspace2D_sptr localWorkspace,
+                    int64_t period);
 
   /// Loads dead time table for the detector
   void loadDeadTimes(Mantid::NeXus::NXRoot &root);
 
   /// Creates Dead Time Table using all the data between begin and end
   DataObjects::TableWorkspace_sptr
-  createDeadTimeTable(std::vector<int> specToLoad, std::vector<double> deadTimes);
+  createDeadTimeTable(std::vector<int> specToLoad,
+                      std::vector<double> deadTimes);
 
   /// Loads detector grouping information
   API::Workspace_sptr loadDetectorGrouping(Mantid::NeXus::NXRoot &root);

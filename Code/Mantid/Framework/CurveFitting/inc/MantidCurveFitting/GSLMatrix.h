@@ -99,6 +99,7 @@ Code Documentation is available at: <http://doxygen.mantidproject.org>
 class MANTID_CURVEFITTING_DLL GSLMatrix {
   /// The pointer to the GSL matrix
   gsl_matrix *m_matrix;
+
 public:
   /// Constructor
   GSLMatrix() : m_matrix(NULL) {}
@@ -123,9 +124,9 @@ public:
   /// @param col :: The first column in the submatrix.
   /// @param nRows :: The number of rows in the submatrix.
   /// @param nCols :: The number of columns in the submatrix.
-  GSLMatrix(const GSLMatrix &M, size_t row, size_t col, size_t nRows, size_t nCols) {
-    if ( row + nRows > M.size1() || col + nCols > M.size2() )
-    {
+  GSLMatrix(const GSLMatrix &M, size_t row, size_t col, size_t nRows,
+            size_t nCols) {
+    if (row + nRows > M.size1() || col + nCols > M.size2()) {
       throw std::runtime_error("Submatrix exceeds matrix size.");
     }
     auto view = gsl_matrix_const_submatrix(M.gsl(), row, col, nRows, nCols);
@@ -135,21 +136,21 @@ public:
 
   /// Constructor
   /// @param M :: A matrix to copy.
-  GSLMatrix(const Kernel::Matrix<double>& M) {
+  GSLMatrix(const Kernel::Matrix<double> &M) {
     m_matrix = gsl_matrix_alloc(M.numRows(), M.numCols());
-    for(size_t i = 0; i < size1(); ++i)
-    for(size_t j = 0; j < size2(); ++j){
-      set(i,j, M[i][j]);
-    }
+    for (size_t i = 0; i < size1(); ++i)
+      for (size_t j = 0; j < size2(); ++j) {
+        set(i, j, M[i][j]);
+      }
   }
 
   /// Create this matrix from a product of two other matrices
   /// @param mult2 :: Matrix multiplication helper object.
-  GSLMatrix(const GSLMatrixMult2 &mult2) : m_matrix(NULL) {*this = mult2;}
+  GSLMatrix(const GSLMatrixMult2 &mult2) : m_matrix(NULL) { *this = mult2; }
 
   /// Create this matrix from a product of three other matrices
   /// @param mult3 :: Matrix multiplication helper object.
-  GSLMatrix(const GSLMatrixMult3 &mult3) : m_matrix(NULL) {*this = mult3;}
+  GSLMatrix(const GSLMatrixMult3 &mult3) : m_matrix(NULL) { *this = mult3; }
 
   /// Destructor.
   ~GSLMatrix() {

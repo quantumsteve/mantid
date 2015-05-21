@@ -602,7 +602,7 @@ void MDHistoWorkspace::getLinePlot(const Mantid::Kernel::VMD &start,
         }
         // And add the normalized signal/error to the list too
         auto signal = this->getSignalAt(linearIndex) * normalizer;
-        if (boost::math::isinf(signal)){
+        if (boost::math::isinf(signal)) {
           // The plotting library (qwt) doesn't like infs.
           signal = std::numeric_limits<signal_t>::quiet_NaN();
         }

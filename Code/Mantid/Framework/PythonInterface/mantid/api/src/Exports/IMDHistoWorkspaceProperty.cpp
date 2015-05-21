@@ -7,5 +7,6 @@ void export_IMDHistoWorkspaceProperty()
 {
   using Mantid::API::IMDHistoWorkspace;
   using Mantid::PythonInterface::WorkspacePropertyExporter;
-  WorkspacePropertyExporter<IMDHistoWorkspace>::define("IMDHistoWorkspaceProperty");
+  WorkspacePropertyExporter<IMDHistoWorkspace>::define(
+      "IMDHistoWorkspaceProperty");
 }

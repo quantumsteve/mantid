@@ -246,7 +246,7 @@ std::string CoordTransformAffine::toXMLString() const {
 
   AutoPtr<Element> coordTransformTypeElement = pDoc->createElement("Type");
   coordTransformTypeElement->appendChild(
-     AutoPtr<Node>(pDoc->createTextNode("CoordTransformAffine")));
+      AutoPtr<Node>(pDoc->createTextNode("CoordTransformAffine")));
   coordTransformElement->appendChild(coordTransformTypeElement);
 
   AutoPtr<Element> paramListElement = pDoc->createElement("ParameterList");
@@ -336,8 +336,10 @@ CoordTransformAffine::combineTransformations(CoordTransform *first,
   // Set in the output
   out->setMatrix(outMat);
   // Clean up
-  if(ownFirstAff) delete firstAff;
-  if(ownSecondAff) delete secondAff;
+  if (ownFirstAff)
+    delete firstAff;
+  if (ownSecondAff)
+    delete secondAff;
   return out;
 }
 

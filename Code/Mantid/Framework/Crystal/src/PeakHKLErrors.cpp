@@ -108,10 +108,10 @@ void PeakHKLErrors::setUpOptRuns() {
  *corresponding
  *                   to the given component or subchild are added to pmap
  */
-void
-PeakHKLErrors::cLone(boost::shared_ptr<Geometry::ParameterMap> &pmap,
-                     boost::shared_ptr<const Geometry::IComponent> component,
-                     boost::shared_ptr<const Geometry::ParameterMap> &pmapSv) {
+void PeakHKLErrors::cLone(
+    boost::shared_ptr<Geometry::ParameterMap> &pmap,
+    boost::shared_ptr<const Geometry::IComponent> component,
+    boost::shared_ptr<const Geometry::ParameterMap> &pmapSv) {
   if (!component)
     return;
   if (component->isParametrized()) {

@@ -129,10 +129,7 @@ struct MANTID_GEOMETRY_DLL FuzzyV3DLessThan {
   */
 class MANTID_GEOMETRY_DLL Group {
 public:
-  enum CoordinateSystem {
-    Orthogonal,
-    Hexagonal
-  };
+  enum CoordinateSystem { Orthogonal, Hexagonal };
 
   Group();
   Group(const std::string &symmetryOperationString);

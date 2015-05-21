@@ -28,8 +28,7 @@ using namespace Mantid::Kernel;
  * (remote) compute resource.
  */
 void MantidWebServiceAPIJobManager::abortRemoteJob(const std::string &jobID) {
-  std::istream &respStream =
-    httpGet("/abort", std::string("JobID=") + jobID);
+  std::istream &respStream = httpGet("/abort", std::string("JobID=") + jobID);
   if (lastStatus() != Poco::Net::HTTPResponse::HTTP_OK) {
     JSONObject resp;
     initFromStream(resp, respStream);
@@ -52,8 +51,7 @@ void MantidWebServiceAPIJobManager::authenticate(const std::string &username,
                                                  const std::string &password) {
   MantidWebServiceAPIHelper helper;
 
-  std::istream &respStream =
-      httpGet("/authenticate", "", username, password);
+  std::istream &respStream = httpGet("/authenticate", "", username, password);
   if (lastStatus() != Poco::Net::HTTPResponse::HTTP_OK) {
     JSONObject resp;
     initFromStream(resp, respStream);
@@ -82,8 +80,8 @@ void MantidWebServiceAPIJobManager::downloadRemoteFile(
     const std::string &localFileName) {
 
   std::istream &respStream =
-      httpGet("/download", std::string("TransID=") + transactionID +
-                                        "&File=" + remoteFileName);
+      httpGet("/download", std::string("TransID=") + transactionID + "&File=" +
+                               remoteFileName);
 
   if (lastStatus() == Poco::Net::HTTPResponse::HTTP_OK) {
 
@@ -258,8 +256,7 @@ std::vector<std::string> MantidWebServiceAPIJobManager::queryRemoteFile(
  */
 Mantid::API::IRemoteJobManager::RemoteJobInfo
 MantidWebServiceAPIJobManager::queryRemoteJob(const std::string &jobID) const {
-  std::istream &respStream =
-      httpGet("/query", std::string("JobID=") + jobID);
+  std::istream &respStream = httpGet("/query", std::string("JobID=") + jobID);
   JSONObject resp;
   initFromStream(resp, respStream);
 
@@ -348,8 +345,8 @@ std::string MantidWebServiceAPIJobManager::startRemoteTransaction() {
 void MantidWebServiceAPIJobManager::stopRemoteTransaction(
     const std::string &transactionID) {
   std::string transId = transactionID;
-  std::istream &respStream = httpGet(
-      "/transaction", std::string("Action=Stop&TransID=") + transId);
+  std::istream &respStream =
+      httpGet("/transaction", std::string("Action=Stop&TransID=") + transId);
 
   if (lastStatus() == Poco::Net::HTTPResponse::HTTP_OK) {
     g_log.information() << "Transaction ID " << transId << " stopped."

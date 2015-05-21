@@ -84,9 +84,8 @@ private:
   static std::vector<bool> createMaskVector(const std::string &filename,
                                             bool &fileLoaded);
   static std::vector<int> createOffsetVector(const std::string &filename,
-                                            bool &fileLoaded);
+                                             bool &fileLoaded);
 };
-
 }
 }
 #endif // DATAHANDING_LOADBBY_H_

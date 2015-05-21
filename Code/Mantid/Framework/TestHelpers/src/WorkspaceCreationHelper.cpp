@@ -363,15 +363,19 @@ create2DWorkspaceWithFullInstrument(int nhist, int nbins, bool includeMonitors,
 
   // Define a source and sample position
   // Define a source component
-  ObjComponent *source =
-      new ObjComponent("moderator", ComponentCreationHelper::createSphere(0.1, V3D(0,0,0), "1"), testInst.get());
+  ObjComponent *source = new ObjComponent(
+      "moderator",
+      ComponentCreationHelper::createSphere(0.1, V3D(0, 0, 0), "1"),
+      testInst.get());
   source->setPos(V3D(-20, 0.0, 0.0));
   testInst->add(source);
   testInst->markAsSource(source);
 
   // Define a sample as a simple sphere
-  ObjComponent *sample =
-      new ObjComponent("samplePos", ComponentCreationHelper::createSphere(0.1, V3D(0,0,0), "1"), testInst.get());
+  ObjComponent *sample = new ObjComponent(
+      "samplePos",
+      ComponentCreationHelper::createSphere(0.1, V3D(0, 0, 0), "1"),
+      testInst.get());
   testInst->setPos(0.0, 0.0, 0.0);
   testInst->add(sample);
   testInst->markAsSamplePos(sample);
@@ -1191,7 +1195,7 @@ createPeaksWorkspace(const int numPeaks, const bool createOrientedLattice) {
     peaksWS->addPeak(peak);
   }
 
-  if(createOrientedLattice) {
+  if (createOrientedLattice) {
     Mantid::Geometry::OrientedLattice lattice;
     peaksWS->mutableSample().setOrientedLattice(&lattice);
   }

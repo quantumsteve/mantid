@@ -125,7 +125,7 @@ void LoadInstrument::exec() {
     // Initialize the parser. Avoid copying the xmltext out of the property
     // here.
     const PropertyWithValue<std::string> *xml =
-      dynamic_cast<const PropertyWithValue<std::string> *>(InstrumentXML);
+        dynamic_cast<const PropertyWithValue<std::string> *>(InstrumentXML);
     if (xml) {
       parser.initialize(m_filename, m_instName, *xml);
     } else {
@@ -180,7 +180,7 @@ void LoadInstrument::exec() {
     if (InstrumentDataService::Instance().doesExist(instrumentNameMangled)) {
       // If it does, just use the one from the one stored there
       instrument =
-        InstrumentDataService::Instance().retrieve(instrumentNameMangled);
+          InstrumentDataService::Instance().retrieve(instrumentNameMangled);
     } else {
       // Really create the instrument
       Progress *prog = new Progress(this, 0, 1, 100);

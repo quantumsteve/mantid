@@ -273,7 +273,7 @@ private:
 
   /** Column names */
   std::vector<std::string> columnNames;
-  
+
   /// Coordinates
   Kernel::SpecialCoordinateSystem m_coordSystem;
 

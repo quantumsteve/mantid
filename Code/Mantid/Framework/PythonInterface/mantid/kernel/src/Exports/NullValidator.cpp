@@ -13,7 +13,5 @@ void export_NullValidator()
 {
   register_ptr_to_python<boost::shared_ptr<NullValidator>>();
 
-  class_<NullValidator, bases<IValidator>, boost::noncopyable>("NullValidator")
-    ;
+  class_<NullValidator, bases<IValidator>, boost::noncopyable>("NullValidator");
 }
-

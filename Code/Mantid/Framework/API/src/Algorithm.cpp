@@ -599,8 +599,8 @@ bool Algorithm::execute() {
         throw;
       else {
         getLogger().error() << "Error in execution of algorithm "
-                            << this->name() << std::endl << ex.what()
-                            << std::endl;
+                            << this->name() << std::endl
+                            << ex.what() << std::endl;
       }
       notificationCenter().postNotification(
           new ErrorNotification(this, ex.what()));
@@ -611,8 +611,8 @@ bool Algorithm::execute() {
         throw;
       else {
         getLogger().error() << "Logic Error in execution of algorithm "
-                            << this->name() << std::endl << ex.what()
-                            << std::endl;
+                            << this->name() << std::endl
+                            << ex.what() << std::endl;
       }
       notificationCenter().postNotification(
           new ErrorNotification(this, ex.what()));
@@ -884,7 +884,8 @@ IAlgorithm_sptr Algorithm::fromString(const std::string &input) {
       } catch (boost::bad_lexical_cast &) {
       }
     }
-    IAlgorithm_sptr alg = AlgorithmManager::Instance().createUnmanaged(algName, version);
+    IAlgorithm_sptr alg =
+        AlgorithmManager::Instance().createUnmanaged(algName, version);
     alg->initialize();
     if (boost::regex_search(input, what, propExp, boost::match_not_null)) {
       std::string _propStr = what[1];

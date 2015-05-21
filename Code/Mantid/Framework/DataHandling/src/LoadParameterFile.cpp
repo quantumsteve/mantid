@@ -117,13 +117,12 @@ void LoadParameterFile::exec() {
     try {
       // First see if the file exists
       Poco::File ipfFile(filename);
-      if(!ipfFile.exists()) {
+      if (!ipfFile.exists()) {
         std::string directoryName =
             Kernel::ConfigService::Instance().getInstrumentDirectory();
         filename = directoryName + "/" + filename;
       }
-      g_log.information() << "Parsing from XML file: " << filename
-                          << std::endl;
+      g_log.information() << "Parsing from XML file: " << filename << std::endl;
       pDoc = pParser.parse(filename);
     } catch (Poco::Exception &exc) {
       throw Kernel::Exception::FileError(

@@ -13,32 +13,19 @@
 using namespace Mantid::Algorithms;
 using namespace Mantid::API;
 
-class TOFSANSResolutionByPixelTest : public CxxTest::TestSuite
-{
+class TOFSANSResolutionByPixelTest : public CxxTest::TestSuite {
 public:
+  void testName() { TS_ASSERT_EQUALS(alg.name(), "TOFSANSResolutionByPixel") }
 
-  void testName()
-  {
-    TS_ASSERT_EQUALS( alg.name(), "TOFSANSResolutionByPixel" )
-  }
+  void testCategory() { TS_ASSERT_EQUALS(alg.category(), "SANS") }
 
-  void testCategory()
-  {
-    TS_ASSERT_EQUALS( alg.category(), "SANS" )
-  }
-
-  void testInit()
-  {
+  void testInit() {
     alg.initialize();
-    TS_ASSERT( alg.isInitialized() )
+    TS_ASSERT(alg.isInitialized())
   }
-
-
-
 
 private:
   TOFSANSResolutionByPixel alg;
-
 };
 
 #endif /*TOFSANSRESOLUTIONBYPIXELTEST_H_*/

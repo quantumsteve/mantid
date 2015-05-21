@@ -29,8 +29,8 @@ DECLARE_ALGORITHM(ExtractSpectra)
 /** Constructor
  */
 ExtractSpectra::ExtractSpectra()
-    : Algorithm(), m_minX(0), m_maxX(0),
-      m_commonBoundaries(false), m_histogram(false), m_croppingInX(false) {}
+    : Algorithm(), m_minX(0), m_maxX(0), m_commonBoundaries(false),
+      m_histogram(false), m_croppingInX(false) {}
 
 //----------------------------------------------------------------------------------------------
 /** Destructor
@@ -122,7 +122,7 @@ void ExtractSpectra::execHistogram() {
 
   // Create the output workspace
   MatrixWorkspace_sptr outputWorkspace = WorkspaceFactory::Instance().create(
-    m_inputWorkspace, m_spectrumList.size(), m_maxX - m_minX,
+      m_inputWorkspace, m_spectrumList.size(), m_maxX - m_minX,
       m_maxX - m_minX - m_histogram);
 
   // If this is a Workspace2D, get the spectra axes for copying in the spectraNo
@@ -134,7 +134,8 @@ void ExtractSpectra::execHistogram() {
     inAxis1 = m_inputWorkspace->getAxis(1);
     auto outAxis1 = outputWorkspace->getAxis(1);
     outTxtAxis = dynamic_cast<TextAxis *>(outAxis1);
-    if (!outTxtAxis) outNumAxis = dynamic_cast<NumericAxis *>(outAxis1);
+    if (!outTxtAxis)
+      outNumAxis = dynamic_cast<NumericAxis *>(outAxis1);
   }
 
   cow_ptr<MantidVec> newX;

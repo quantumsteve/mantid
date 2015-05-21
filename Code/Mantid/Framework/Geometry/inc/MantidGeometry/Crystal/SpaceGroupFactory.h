@@ -12,7 +12,7 @@ namespace Mantid {
 namespace Geometry {
 
 bool MANTID_GEOMETRY_DLL
-    isValidGeneratorString(const std::string &generatorString);
+isValidGeneratorString(const std::string &generatorString);
 
 /**
  * @class AbstractSpaceGroupGenerator

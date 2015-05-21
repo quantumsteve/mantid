@@ -1374,9 +1374,8 @@ int getStringIndex(map<string, size_t> lookupdict, string key) {
 //----------------------------------------------------------------------------------------------
 /** Store function parameter values to a map
   */
-void
-storeFunctionParameterValue(IFunction_sptr function,
-                            map<string, pair<double, double>> &parvaluemap) {
+void storeFunctionParameterValue(
+    IFunction_sptr function, map<string, pair<double, double>> &parvaluemap) {
   parvaluemap.clear();
 
   vector<string> parnames = function->getParameterNames();
@@ -1395,10 +1394,9 @@ storeFunctionParameterValue(IFunction_sptr function,
  * function object
   * and a (string, Parameter) map
   */
-void
-restoreFunctionParameterValue(map<string, pair<double, double>> parvaluemap,
-                              IFunction_sptr function,
-                              map<string, Parameter> &parammap) {
+void restoreFunctionParameterValue(
+    map<string, pair<double, double>> parvaluemap, IFunction_sptr function,
+    map<string, Parameter> &parammap) {
   vector<string> parnames = function->getParameterNames();
 
   for (size_t i = 0; i < parnames.size(); ++i) {

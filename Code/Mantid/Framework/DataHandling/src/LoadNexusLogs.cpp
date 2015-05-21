@@ -168,8 +168,9 @@ void LoadNexusLogs::exec() {
           dynamic_cast<Kernel::TimeSeriesProperty<double> *>(
               workspace->mutableRun().getProperty("proton_log"));
       if (!plog)
-        throw std::runtime_error("Could not cast (interpret) proton_log as a time "
-                                 "series property. Cannot continue.");
+        throw std::runtime_error(
+            "Could not cast (interpret) proton_log as a time "
+            "series property. Cannot continue.");
       Kernel::TimeSeriesProperty<double> *pcharge =
           new Kernel::TimeSeriesProperty<double>("proton_charge");
       std::vector<double> pval;

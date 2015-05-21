@@ -243,7 +243,6 @@ public:
   /// Gets the proxy for the system
   Kernel::ProxyInfo &getProxy(const std::string &url);
 
-
 private:
   friend struct Mantid::Kernel::CreateUsingNew<ConfigServiceImpl>;
   /// Handles distribution of Poco signals.
@@ -322,7 +321,7 @@ private:
   /// Store a list of instrument directory paths
   std::vector<std::string> m_InstrumentDirs;
   /// A map of facilities to instruments
-  std::map<std::string, std::vector<std::string> > m_instr_prefixes;
+  std::map<std::string, std::vector<std::string>> m_instr_prefixes;
 
   /// The list of available facilities
   std::vector<FacilityInfo *> m_facilities;
@@ -341,14 +340,14 @@ private:
 inline
 #endif
     template class MANTID_KERNEL_DLL
-Mantid::Kernel::SingletonHolder<ConfigServiceImpl>;
+        Mantid::Kernel::SingletonHolder<ConfigServiceImpl>;
 typedef MANTID_KERNEL_DLL Mantid::Kernel::SingletonHolder<ConfigServiceImpl>
-ConfigService;
+    ConfigService;
 
 typedef Mantid::Kernel::ConfigServiceImpl::ValueChanged
-ConfigValChangeNotification;
+    ConfigValChangeNotification;
 typedef const Poco::AutoPtr<Mantid::Kernel::ConfigServiceImpl::ValueChanged> &
-ConfigValChangeNotification_ptr;
+    ConfigValChangeNotification_ptr;
 
 } // namespace Kernel
 } // namespace Mantid

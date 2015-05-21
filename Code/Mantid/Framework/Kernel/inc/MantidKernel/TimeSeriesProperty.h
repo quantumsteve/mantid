@@ -308,8 +308,8 @@ private:
 /// Function filtering double TimeSeriesProperties according to the requested
 /// statistics.
 double DLLExport
-    filterByStatistic(TimeSeriesProperty<double> const *const propertyToFilter,
-                      Kernel::Math::StatisticType statistic_type);
+filterByStatistic(TimeSeriesProperty<double> const *const propertyToFilter,
+                  Kernel::Math::StatisticType statistic_type);
 
 } // namespace Kernel
 } // namespace Mantid

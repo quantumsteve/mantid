@@ -19,7 +19,7 @@ using namespace Geometry;
 MedianDetectorTest::MedianDetectorTest()
     : DetectorDiagnostic(), m_inputWS(), m_loFrac(0.1), m_hiFrac(1.5),
       m_minSpec(0), m_maxSpec(EMPTY_INT()), m_rangeLower(0.0),
-      m_rangeUpper(0.0){}
+      m_rangeUpper(0.0) {}
 
 const std::string MedianDetectorTest::category() const { return "Diagnostics"; }
 
@@ -229,10 +229,9 @@ API::MatrixWorkspace_sptr MedianDetectorTest::getSolidAngles(int firstSpec,
  * @param indexmap Index map.
  * @returns The number failed.
  */
-int
-MedianDetectorTest::maskOutliers(const std::vector<double> medianvec,
-                                 API::MatrixWorkspace_sptr countsWS,
-                                 std::vector<std::vector<size_t>> indexmap) {
+int MedianDetectorTest::maskOutliers(
+    const std::vector<double> medianvec, API::MatrixWorkspace_sptr countsWS,
+    std::vector<std::vector<size_t>> indexmap) {
 
   // Fractions of the median
   const double out_lo = getProperty("LowOutlier");
@@ -288,11 +287,11 @@ MedianDetectorTest::maskOutliers(const std::vector<double> medianvec,
  * @return The number of detectors that failed the tests, not including those
  * skipped.
  */
-int
-MedianDetectorTest::doDetectorTests(const API::MatrixWorkspace_sptr countsWS,
-                                    const std::vector<double> medianvec,
-                                    std::vector<std::vector<size_t>> indexmap,
-                                    API::MatrixWorkspace_sptr maskWS) {
+int MedianDetectorTest::doDetectorTests(
+    const API::MatrixWorkspace_sptr countsWS,
+    const std::vector<double> medianvec,
+    std::vector<std::vector<size_t>> indexmap,
+    API::MatrixWorkspace_sptr maskWS) {
   g_log.debug("Applying the criteria to find failing detectors");
 
   // A spectra can't fail if the statistics show its value is consistent with

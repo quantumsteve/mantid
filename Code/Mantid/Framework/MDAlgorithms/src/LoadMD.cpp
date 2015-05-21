@@ -193,7 +193,8 @@ void LoadMD::exec() {
 
     // Now the ExperimentInfo
     bool lazyLoadExpt = fileBacked;
-    MDBoxFlatTree::loadExperimentInfos(m_file.get(), m_filename, ws, lazyLoadExpt);
+    MDBoxFlatTree::loadExperimentInfos(m_file.get(), m_filename, ws,
+                                       lazyLoadExpt);
 
     // Wrapper to cast to MDEventWorkspace then call the function
     CALL_MDEVENT_FUNCTION(this->doLoad, ws);
@@ -261,8 +262,8 @@ void LoadMD::loadHisto() {
 
   this->loadAffineMatricies(boost::dynamic_pointer_cast<IMDWorkspace>(ws));
 
-  if (SaveMDVersion == 2 )
-    m_file->openGroup("data","NXdata");
+  if (SaveMDVersion == 2)
+    m_file->openGroup("data", "NXdata");
   // Load each data slab
   this->loadSlab("signal", ws->getSignalArray(), ws, ::NeXus::FLOAT64);
   this->loadSlab("errors_squared", ws->getErrorSquaredArray(), ws,
@@ -300,7 +301,7 @@ void LoadMD::loadDimensions2() {
 
   std::string axes;
 
-  m_file->openGroup("data","NXdata");
+  m_file->openGroup("data", "NXdata");
   m_file->openData("signal");
   m_file->getAttr("axes", axes);
   m_file->closeData();
@@ -527,7 +528,7 @@ CoordTransform *LoadMD::loadAffineMatrix(std::string entry_name) {
   outD--;
   Matrix<coord_t> mat(vec);
   CoordTransform *transform = NULL;
-  if (("CoordTransformAffine" == type)||("CoordTransformAligned" == type)) {
+  if (("CoordTransformAffine" == type) || ("CoordTransformAligned" == type)) {
     CoordTransformAffine *affine = new CoordTransformAffine(inD, outD);
     affine->setMatrix(mat);
     transform = affine;

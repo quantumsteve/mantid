@@ -77,8 +77,8 @@ void DataProcessorAlgorithm::setLoadAlg(const std::string &alg) {
   m_loadAlg = alg;
 }
 
-void
-DataProcessorAlgorithm::setLoadAlgFileProp(const std::string &filePropName) {
+void DataProcessorAlgorithm::setLoadAlgFileProp(
+    const std::string &filePropName) {
   if (filePropName.empty()) {
     throw std::invalid_argument(
         "Cannot set the load algorithm file property name");

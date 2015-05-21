@@ -2374,8 +2374,8 @@ void FilterEventsByLogValuePreNexus::loadPixelMap(const std::string &filename) {
 /** Open an event file
  * @param filename :: file to open.
  */
-void
-FilterEventsByLogValuePreNexus::openEventFile(const std::string &filename) {
+void FilterEventsByLogValuePreNexus::openEventFile(
+    const std::string &filename) {
   // Open the file
   eventfile = new BinaryFile<DasEvent>(filename);
   num_events = eventfile->getNumElements();
@@ -2405,9 +2405,8 @@ FilterEventsByLogValuePreNexus::openEventFile(const std::string &filename) {
  * @param filename :: file to load.
  * @param throwError :: Flag to trigger error throwing instead of just logging
  */
-void
-FilterEventsByLogValuePreNexus::readPulseidFile(const std::string &filename,
-                                                const bool throwError) {
+void FilterEventsByLogValuePreNexus::readPulseidFile(
+    const std::string &filename, const bool throwError) {
   this->proton_charge_tot = 0.;
   this->num_pulses = 0;
   this->pulsetimesincreasing = true;

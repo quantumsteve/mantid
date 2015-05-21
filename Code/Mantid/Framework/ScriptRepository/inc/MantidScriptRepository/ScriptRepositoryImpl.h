@@ -167,7 +167,6 @@ private:
 
   std::string ignoreregex;
 
-
   std::string getParentFolder(const std::string &entry);
 };
 

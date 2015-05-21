@@ -39,8 +39,7 @@ PointGroup_sptr PointGroupFactoryImpl::createPointGroupFromSpaceGroup(
     }
 
     return pointGroup;
-  }
-  catch (std::invalid_argument) {
+  } catch (std::invalid_argument) {
     if (spaceGroup.getCoordinateSystem() !=
         Group::CoordinateSystem::Hexagonal) {
       pointGroupSymbol.append(" r");
@@ -83,10 +82,9 @@ std::vector<std::string> PointGroupFactoryImpl::getPointGroupSymbols(
   return pointGroups;
 }
 
-void
-PointGroupFactoryImpl::subscribePointGroup(const std::string &hmSymbol,
-                                           const std::string &generatorString,
-                                           const std::string &description) {
+void PointGroupFactoryImpl::subscribePointGroup(
+    const std::string &hmSymbol, const std::string &generatorString,
+    const std::string &description) {
   if (isSubscribed(hmSymbol)) {
     throw std::invalid_argument(
         "Point group with this symbol is already registered.");
@@ -145,8 +143,8 @@ PointGroupFactoryImpl::getPrototype(const std::string &hmSymbol) {
   return generator->getPrototype();
 }
 
-void
-PointGroupFactoryImpl::subscribe(const PointGroupGenerator_sptr &generator) {
+void PointGroupFactoryImpl::subscribe(
+    const PointGroupGenerator_sptr &generator) {
   if (!generator) {
     throw std::runtime_error("Cannot register null-generator.");
   }

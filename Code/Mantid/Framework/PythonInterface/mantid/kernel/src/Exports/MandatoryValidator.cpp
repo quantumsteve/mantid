@@ -6,13 +6,11 @@ using Mantid::Kernel::MandatoryValidator;
 using Mantid::Kernel::IValidator;
 using namespace boost::python;
 
-namespace
-{
-  /// A macro for generating exports for each type
-  #define EXPORT_MANDATORYVALIDATOR(ElementType, prefix) \
-    class_<MandatoryValidator<ElementType>, bases<IValidator>, \
-           boost::noncopyable>(#prefix"MandatoryValidator") \
-    ;
+namespace {
+/// A macro for generating exports for each type
+#define EXPORT_MANDATORYVALIDATOR(ElementType, prefix)                         \
+  class_<MandatoryValidator<ElementType>, bases<IValidator>,                   \
+         boost::noncopyable>(#prefix "MandatoryValidator");
 }
 
 // clang-format off
@@ -28,5 +26,3 @@ void export_MandatoryValidator()
   EXPORT_MANDATORYVALIDATOR(std::vector<long>, IntArray);
   EXPORT_MANDATORYVALIDATOR(std::vector<std::string>, StringArray);
 }
-
-

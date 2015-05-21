@@ -53,9 +53,8 @@ void ProgressTracker::complete() {
 EventCounter::EventCounter(std::vector<size_t> &eventCounts,
                            const std::vector<bool> &mask,
                            const std::vector<int> &offsets, size_t stride)
-    : m_eventCounts(eventCounts), m_mask(mask),
-      m_offsets(offsets), m_stride(stride),
-      m_tofMin(std::numeric_limits<double>::max()),
+    : m_eventCounts(eventCounts), m_mask(mask), m_offsets(offsets),
+      m_stride(stride), m_tofMin(std::numeric_limits<double>::max()),
       m_tofMax(std::numeric_limits<double>::min()) {}
 double EventCounter::tofMin() const {
   return m_tofMin <= m_tofMax ? m_tofMin : 0.0;
@@ -83,8 +82,8 @@ void EventCounter::addEvent(size_t x, size_t y, double tof) {
 EventAssigner::EventAssigner(std::vector<EventVector_pt> &eventVectors,
                              const std::vector<bool> &mask,
                              const std::vector<int> &offsets, size_t stride)
-    : m_eventVectors(eventVectors), m_mask(mask),
-      m_offsets(offsets), m_stride(stride) {}
+    : m_eventVectors(eventVectors), m_mask(mask), m_offsets(offsets),
+      m_stride(stride) {}
 void EventAssigner::addEvent(size_t x, size_t y, double tof) {
   size_t yNew = y + (size_t)m_offsets[x];
   if (yNew < m_stride) {
@@ -136,7 +135,7 @@ bool FastReadOnlyFile::seek(int64_t offset, int whence, int64_t *newPosition) {
 
 namespace Tar {
 
-template <size_t N> int64_t octalToInt(char (&str)[N]) {
+template <size_t N> int64_t octalToInt(char(&str)[N]) {
   int64_t result = 0;
   char *p = str;
   for (size_t n = N; n > 1; --n) { // last character is '\0'

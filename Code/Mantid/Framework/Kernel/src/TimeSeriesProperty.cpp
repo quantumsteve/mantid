@@ -347,9 +347,9 @@ void TimeSeriesProperty<TYPE>::filterByTimes(
  *type.
  */
 template <typename TYPE>
-void
-TimeSeriesProperty<TYPE>::splitByTime(std::vector<SplittingInterval> &splitter,
-                                      std::vector<Property *> outputs) const {
+void TimeSeriesProperty<TYPE>::splitByTime(
+    std::vector<SplittingInterval> &splitter,
+    std::vector<Property *> outputs) const {
   // 0. Sort if necessary
   sort();
 
@@ -1485,8 +1485,8 @@ Kernel::DateAndTime TimeSeriesProperty<TYPE>::nthTime(int n) const {
    @param filter :: The filter mask to apply
  */
 template <typename TYPE>
-void
-TimeSeriesProperty<TYPE>::filterWith(const TimeSeriesProperty<bool> *filter) {
+void TimeSeriesProperty<TYPE>::filterWith(
+    const TimeSeriesProperty<bool> *filter) {
   // 1. Clear the current
   m_filter.clear();
   m_filterQuickRef.clear();

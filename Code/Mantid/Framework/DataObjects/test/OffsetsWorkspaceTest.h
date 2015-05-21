@@ -12,17 +12,9 @@
 using namespace Mantid::DataObjects;
 using namespace Mantid::API;
 
-class OffsetsWorkspaceTest : public CxxTest::TestSuite
-{
+class OffsetsWorkspaceTest : public CxxTest::TestSuite {
 public:
-
-  void test_Something()
-  {
-  }
-
-
+  void test_Something() {}
 };
 
-
 #endif /* MANTID_DATAOBJECTS_OFFSETSWORKSPACETEST_H_ */
-

@@ -177,8 +177,7 @@ void Fit::addWorkspace(const std::string &workspacePropertyName,
       try {
         creator = API::DomainCreatorFactory::Instance().createDomainCreator(
             "FitMD", this, workspacePropertyName, m_domainType);
-      }
-      catch (Kernel::Exception::NotFoundError &) {
+      } catch (Kernel::Exception::NotFoundError &) {
         throw std::invalid_argument("Unsupported workspace type" + ws->id());
       }
     }
@@ -256,8 +255,7 @@ void Fit::addWorkspaces() {
           try {
             creator = API::DomainCreatorFactory::Instance().createDomainCreator(
                 "FitMD", this, workspacePropertyName, m_domainType);
-          }
-          catch (Kernel::Exception::NotFoundError &) {
+          } catch (Kernel::Exception::NotFoundError &) {
             throw std::invalid_argument("Unsupported workspace type" +
                                         ws->id());
           }
@@ -312,7 +310,7 @@ void Fit::init() {
                          "the fitting function.");
   declareProperty("Constraints", "", Kernel::Direction::Input);
   getPointerToProperty("Constraints")->setDocumentation("List of constraints");
-  auto mustBePositive = boost::shared_ptr<Kernel::BoundedValidator<int> >(
+  auto mustBePositive = boost::shared_ptr<Kernel::BoundedValidator<int>>(
       new Kernel::BoundedValidator<int>());
   mustBePositive->setLower(0);
   declareProperty(

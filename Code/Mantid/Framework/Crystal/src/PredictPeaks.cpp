@@ -136,7 +136,7 @@ void PredictPeaks::doHKL(const double h, const double k, const double l,
       PARALLEL_CRITICAL(PredictPeaks_numInRange) { numInRange++; }
 
       // Create the peak using the Q in the lab framewith all its info:
-      Peak p(inst, q,  boost::optional<double>());
+      Peak p(inst, q, boost::optional<double>());
       if (p.findDetector()) {
         // Only add peaks that hit the detector
         p.setGoniometerMatrix(gonio);
@@ -164,7 +164,7 @@ void PredictPeaks::exec() {
       boost::dynamic_pointer_cast<PeaksWorkspace>(inBareWS);
   IMDEventWorkspace_sptr mdWS =
       boost::dynamic_pointer_cast<IMDEventWorkspace>(inBareWS);
-  std::vector<Matrix<double> > gonioVec;
+  std::vector<Matrix<double>> gonioVec;
   gonio = Matrix<double>(3, 3, true);
   Mantid::Kernel::DblMatrix gonioLast = Matrix<double>(3, 3, true);
   if (matrixWS) {
@@ -173,18 +173,18 @@ void PredictPeaks::exec() {
     try {
       gonio = inWS->mutableRun().getGoniometerMatrix();
       gonioVec.push_back(gonio);
-    }
-    catch (std::runtime_error &e) {
+    } catch (std::runtime_error &e) {
       g_log.error() << "Error getting the goniometer rotation matrix from the "
-                       "InputWorkspace." << std::endl << e.what() << std::endl;
+                       "InputWorkspace." << std::endl
+                    << e.what() << std::endl;
       g_log.warning() << "Using identity goniometer rotation matrix instead."
                       << std::endl;
     }
   } else if (peaksWS) {
-  // We must sort the peaks
+    // We must sort the peaks
     std::vector<std::pair<std::string, bool>> criteria;
     criteria.push_back(std::pair<std::string, bool>("RunNumber", true));
-    //criteria.push_back(std::pair<std::string, bool>("BankName", true));
+    // criteria.push_back(std::pair<std::string, bool>("BankName", true));
     peaksWS->sort(criteria);
     inWS = peaksWS;
     for (int i = 0; i < static_cast<int>(peaksWS->getNumberPeaks()); ++i) {
@@ -289,7 +289,8 @@ void PredictPeaks::exec() {
 
       // cppcheck-suppress syntaxError
       PRAGMA_OMP(parallel for schedule(dynamic, 1) )
-      for (int i = 0; i < static_cast<int>(HKLPeaksWorkspace->getNumberPeaks()); ++i) {
+      for (int i = 0; i < static_cast<int>(HKLPeaksWorkspace->getNumberPeaks());
+           ++i) {
         PARALLEL_START_INTERUPT_REGION
 
         IPeak &p = HKLPeaksWorkspace->getPeak(i);

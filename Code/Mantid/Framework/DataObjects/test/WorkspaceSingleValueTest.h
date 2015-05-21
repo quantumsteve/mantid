@@ -10,47 +10,40 @@
 
 using Mantid::DataObjects::WorkspaceSingleValue;
 
-class WorkspaceSingleValueTest : public CxxTest::TestSuite
-{
+class WorkspaceSingleValueTest : public CxxTest::TestSuite {
 
 public:
-  void testConstructorDefaults()
-  {
+  void testConstructorDefaults() {
     WorkspaceSingleValue ws;
-    TS_ASSERT_DELTA(0.0,ws.dataX(0)[0],1e-6);
-    TS_ASSERT_DELTA(0.0,ws.dataY(0)[0],1e-6);
-    TS_ASSERT_DELTA(0.0,ws.dataE(0)[0],1e-6);
+    TS_ASSERT_DELTA(0.0, ws.dataX(0)[0], 1e-6);
+    TS_ASSERT_DELTA(0.0, ws.dataY(0)[0], 1e-6);
+    TS_ASSERT_DELTA(0.0, ws.dataE(0)[0], 1e-6);
   }
-  void testConstructor()
-  {
-    WorkspaceSingleValue ws(1,2);
-    TS_ASSERT_DELTA(0.0,ws.dataX(0)[0],1e-6);
-    TS_ASSERT_DELTA(1,ws.dataY(0)[0],1e-6);
-    TS_ASSERT_DELTA(2,ws.dataE(0)[0],1e-6);
+  void testConstructor() {
+    WorkspaceSingleValue ws(1, 2);
+    TS_ASSERT_DELTA(0.0, ws.dataX(0)[0], 1e-6);
+    TS_ASSERT_DELTA(1, ws.dataY(0)[0], 1e-6);
+    TS_ASSERT_DELTA(2, ws.dataE(0)[0], 1e-6);
   }
 
-  void testsetgetXvector()
-  {
+  void testsetgetXvector() {
     WorkspaceSingleValue ws;
-    Mantid::MantidVec v1(1,1.1);
+    Mantid::MantidVec v1(1, 1.1);
     ws.dataX(0) = v1;
-    TS_ASSERT_EQUALS(v1,ws.dataX(0));
+    TS_ASSERT_EQUALS(v1, ws.dataX(0));
   }
-  void testsetgetYvector()
-  {
+  void testsetgetYvector() {
     WorkspaceSingleValue ws;
-    Mantid::MantidVec v1(1,1.1);
+    Mantid::MantidVec v1(1, 1.1);
     ws.dataY(0) = v1;
-    TS_ASSERT_EQUALS(v1,ws.dataY(0));
+    TS_ASSERT_EQUALS(v1, ws.dataY(0));
   }
 
-  void testsetgetEvector()
-  {
+  void testsetgetEvector() {
     WorkspaceSingleValue ws;
-    Mantid::MantidVec v1(1,1.1);
+    Mantid::MantidVec v1(1, 1.1);
     ws.dataE(0) = v1;
-    TS_ASSERT_EQUALS(v1,ws.dataE(0));
+    TS_ASSERT_EQUALS(v1, ws.dataE(0));
   }
-
 };
 #endif /*TESTWORKSPACESINGLEVALUE_*/

@@ -29,8 +29,9 @@ void MDEventWSWrapper::createEmptyEventWS(const Strings &targ_dim_names,
                                           const std::vector<double> &dimMax,
                                           const std::vector<size_t> &numBins) {
 
-  boost::shared_ptr<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd>> ws =
-      boost::shared_ptr<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd>>(
+  boost::shared_ptr<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd>>
+      ws = boost::shared_ptr<
+          DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd>>(
           new DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd>());
 
   size_t nBins(10);
@@ -90,7 +91,8 @@ void MDEventWSWrapper::addMDDataND(float *sigErr, uint16_t *runIndex,
                                    size_t dataSize) const {
 
   DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *const pWs =
-      dynamic_cast<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
+      dynamic_cast<
+          DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
           m_Workspace.get());
   if (pWs) {
     for (size_t i = 0; i < dataSize; i++) {
@@ -99,8 +101,8 @@ void MDEventWSWrapper::addMDDataND(float *sigErr, uint16_t *runIndex,
           *(detId + i), (Coord + i * nd)));
     }
   } else {
-    DataObjects::MDEventWorkspace<DataObjects::MDLeanEvent<nd>, nd> *const pLWs =
-        dynamic_cast<
+    DataObjects::MDEventWorkspace<DataObjects::MDLeanEvent<nd>, nd> *const
+        pLWs = dynamic_cast<
             DataObjects::MDEventWorkspace<DataObjects::MDLeanEvent<nd>, nd> *>(
             m_Workspace.get());
 
@@ -129,7 +131,8 @@ void MDEventWSWrapper::addMDDataND<0>(float *, uint16_t *, uint32_t *,
 // void MDEventWSWrapper::splitBoxList(Kernel::ThreadScheduler * ts)
 template <size_t nd> void MDEventWSWrapper::splitBoxList() {
   DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *const pWs =
-      dynamic_cast<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
+      dynamic_cast<
+          DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
           m_Workspace.get());
   if (!pWs)
     throw(std::bad_cast());
@@ -163,7 +166,8 @@ template <> void MDEventWSWrapper::splitBoxList<0>() {
 template <size_t nd> void MDEventWSWrapper::calcCentroidND(void) {
 
   DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *const pWs =
-      dynamic_cast<DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
+      dynamic_cast<
+          DataObjects::MDEventWorkspace<DataObjects::MDEvent<nd>, nd> *>(
           this->m_Workspace.get());
   if (!pWs)
     throw(std::bad_cast());

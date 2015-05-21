@@ -204,10 +204,9 @@ void SpatialGrouping::exec() {
 * @param bbox :: BoundingBox object representing the search region
 * @return true if neighbours were found matching the parameters, false otherwise
 */
-bool
-SpatialGrouping::expandNet(std::map<specid_t, Mantid::Kernel::V3D> &nearest,
-                           specid_t spec, const size_t &noNeighbours,
-                           const Mantid::Geometry::BoundingBox &bbox) {
+bool SpatialGrouping::expandNet(
+    std::map<specid_t, Mantid::Kernel::V3D> &nearest, specid_t spec,
+    const size_t &noNeighbours, const Mantid::Geometry::BoundingBox &bbox) {
   const size_t incoming = nearest.size();
 
   Mantid::Geometry::IDetector_const_sptr det = m_detectors[spec];
@@ -285,9 +284,9 @@ SpatialGrouping::expandNet(std::map<specid_t, Mantid::Kernel::V3D> &nearest,
 * the method
 * @param noNeighbours :: number of elements that should be kept
 */
-void
-SpatialGrouping::sortByDistance(std::map<detid_t, Mantid::Kernel::V3D> &nearest,
-                                const size_t &noNeighbours) {
+void SpatialGrouping::sortByDistance(
+    std::map<detid_t, Mantid::Kernel::V3D> &nearest,
+    const size_t &noNeighbours) {
   std::vector<std::pair<detid_t, Mantid::Kernel::V3D>> order(nearest.begin(),
                                                              nearest.end());
 
@@ -309,9 +308,9 @@ SpatialGrouping::sortByDistance(std::map<detid_t, Mantid::Kernel::V3D> &nearest,
 * @param det :: input detector
 * @param bndbox :: reference to BoundingBox object (changed by this function)
 */
-void
-SpatialGrouping::createBox(boost::shared_ptr<const Geometry::IDetector> det,
-                           Geometry::BoundingBox &bndbox) {
+void SpatialGrouping::createBox(
+    boost::shared_ptr<const Geometry::IDetector> det,
+    Geometry::BoundingBox &bndbox) {
 
   // We may have DetectorGroups here
   // Unfortunately, IDetector doesn't contain the

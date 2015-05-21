@@ -137,8 +137,8 @@ Kernel::Matrix<double> MDWSDescription::getGoniometerMatr() const {
 * Primary used to obtain existing ws parameters
 *@param pWS -- shared pointer to existing MD workspace
 */
-void
-MDWSDescription::buildFromMDWS(const API::IMDEventWorkspace_const_sptr &pWS) {
+void MDWSDescription::buildFromMDWS(
+    const API::IMDEventWorkspace_const_sptr &pWS) {
   m_NDims = (unsigned int)pWS->getNumDims();
   // prepare all arrays:
   m_DimNames.resize(m_NDims);
@@ -173,8 +173,8 @@ MDWSDescription::buildFromMDWS(const API::IMDEventWorkspace_const_sptr &pWS) {
 *@param SourceMatrWS -- the MDWS description obtained from input matrix
 *workspace and the algorithm parameters
 */
-void
-MDWSDescription::setUpMissingParameters(const MDWSDescription &SourceMatrWS) {
+void MDWSDescription::setUpMissingParameters(
+    const MDWSDescription &SourceMatrWS) {
   m_InWS = SourceMatrWS.m_InWS;
   m_Emode = SourceMatrWS.m_Emode;
   m_LorentzCorr = SourceMatrWS.m_LorentzCorr;
@@ -377,9 +377,8 @@ void MDWSDescription::fillAddProperties(
 /** function verifies the consistency of the min and max dimensions values
 * checking if all necessary
 * values were defined and min values are smaller then max values */
-void
-MDWSDescription::checkMinMaxNdimConsistent(const std::vector<double> &minVal,
-                                           const std::vector<double> &maxVal) {
+void MDWSDescription::checkMinMaxNdimConsistent(
+    const std::vector<double> &minVal, const std::vector<double> &maxVal) {
   if (minVal.size() != maxVal.size()) {
     std::string ERR = " number of specified min dimension values: " +
                       boost::lexical_cast<std::string>(minVal.size()) +

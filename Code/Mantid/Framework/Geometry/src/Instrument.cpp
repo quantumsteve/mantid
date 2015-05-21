@@ -878,9 +878,8 @@ Instrument::getPlottable() const {
   }
 }
 
-void
-Instrument::appendPlottable(const CompAssembly &ca,
-                            std::vector<IObjComponent_const_sptr> &lst) const {
+void Instrument::appendPlottable(
+    const CompAssembly &ca, std::vector<IObjComponent_const_sptr> &lst) const {
   for (int i = 0; i < ca.nelements(); i++) {
     IComponent *c = ca[i].get();
     CompAssembly *a = dynamic_cast<CompAssembly *>(c);
@@ -1060,7 +1059,7 @@ void Instrument::saveNexus(::NeXus::File *file,
 
   // XML contents of instrument, as a NX note
   file->makeGroup("instrument_xml", "NXnote", true);
-  const std::string& xmlText = getXmlText();
+  const std::string &xmlText = getXmlText();
   if (xmlText.empty())
     g_log.warning() << "Saving Instrument with no XML data. Mantid might NOT be"
                     << " able to re-open the resulting Nexus file. This should"

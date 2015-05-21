@@ -437,17 +437,15 @@ void GenerateEventsFilter::setFilterByTimeOnly() {
       }
     } // END-WHILE
   }   // END-IF-ELSE
-  else
-  {
+  else {
     // Explicitly N time intervals with various interval
 
     // Construct a vector for time intervals in nanosecond
     size_t numtimeintervals = vec_timeintervals.size();
     std::vector<int64_t> vec_dtimens(numtimeintervals);
-    for (size_t id = 0; id < numtimeintervals; ++id)
-    {
-      int64_t deltatime_ns =
-          static_cast<int64_t>(vec_timeintervals[id] * m_timeUnitConvertFactorToNS);
+    for (size_t id = 0; id < numtimeintervals; ++id) {
+      int64_t deltatime_ns = static_cast<int64_t>(vec_timeintervals[id] *
+                                                  m_timeUnitConvertFactorToNS);
       vec_dtimens[id] = deltatime_ns;
     }
 
@@ -458,15 +456,13 @@ void GenerateEventsFilter::setFilterByTimeOnly() {
     int wsindex = 0;
     while (curtime_ns < m_stopTime.totalNanoseconds()) {
       int64_t deltatime_ns;
-      for (size_t id = 0; id < numtimeintervals; ++id)
-      {
+      for (size_t id = 0; id < numtimeintervals; ++id) {
         // get next time interval value
         deltatime_ns = vec_dtimens[id];
         // Calculate next.time
         int64_t nexttime_ns = curtime_ns + deltatime_ns;
         bool breaklater = false;
-        if (nexttime_ns > m_stopTime.totalNanoseconds())
-        {
+        if (nexttime_ns > m_stopTime.totalNanoseconds()) {
           nexttime_ns = m_stopTime.totalNanoseconds();
           breaklater = true;
         }
@@ -496,7 +492,7 @@ void GenerateEventsFilter::setFilterByTimeOnly() {
         if (breaklater)
           break;
       } // END-FOR
-    } // END-WHILE
+    }   // END-WHILE
   }
 
   return;
@@ -1682,10 +1678,9 @@ int GenerateEventsFilter::determineChangingDirection(int startindex) {
 //----------------------------------------------------------------------------------------------
 /** Add a new splitter to vector of splitters.  It is used by FilterByTime only.
   */
-void
-GenerateEventsFilter::addNewTimeFilterSplitter(Kernel::DateAndTime starttime,
-                                               Kernel::DateAndTime stoptime,
-                                               int wsindex, string info) {
+void GenerateEventsFilter::addNewTimeFilterSplitter(
+    Kernel::DateAndTime starttime, Kernel::DateAndTime stoptime, int wsindex,
+    string info) {
   if (m_forFastLog) {
     // For MatrixWorkspace splitter
     // Start of splitter

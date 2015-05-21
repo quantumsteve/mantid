@@ -1760,10 +1760,9 @@ void InstrumentDefinitionParser::setFacing(Geometry::IComponent *comp,
 *  @throw InstrumentDefinitionError Thrown if issues with the content of XML
 *instrument file
 */
-void
-InstrumentDefinitionParser::setLogfile(const Geometry::IComponent *comp,
-                                       const Poco::XML::Element *pElem,
-                                       InstrumentParameterCache &logfileCache) {
+void InstrumentDefinitionParser::setLogfile(
+    const Geometry::IComponent *comp, const Poco::XML::Element *pElem,
+    InstrumentParameterCache &logfileCache) {
   const std::string filename = m_xmlFile->getFileFullPathStr();
 
   // The purpose below is to have a quicker way to judge if pElem contains a
@@ -2454,9 +2453,8 @@ void InstrumentDefinitionParser::adjust(
 /// @param comp Reference coordinate system
 /// @param pos A position relative to the coord. sys. of comp
 /// @return absolute position
-V3D
-InstrumentDefinitionParser::getAbsolutPositionInCompCoorSys(ICompAssembly *comp,
-                                                            V3D pos) {
+V3D InstrumentDefinitionParser::getAbsolutPositionInCompCoorSys(
+    ICompAssembly *comp, V3D pos) {
   Component *dummyComp = new Component("dummy", comp);
   comp->add(dummyComp);
 

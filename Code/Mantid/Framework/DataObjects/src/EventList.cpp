@@ -1685,10 +1685,9 @@ EventList::compressEventsHelper(const std::vector<T> &events,
  */
 
 template <class T>
-void
-EventList::compressEventsParallelHelper(const std::vector<T> &events,
-                                        std::vector<WeightedEventNoTime> &out,
-                                        double tolerance) {
+void EventList::compressEventsParallelHelper(
+    const std::vector<T> &events, std::vector<WeightedEventNoTime> &out,
+    double tolerance) {
   // Create a local output vector for each thread
   int numThreads = PARALLEL_GET_MAX_THREADS;
   std::vector<std::vector<WeightedEventNoTime>> outputs(numThreads);
@@ -2236,10 +2235,9 @@ void EventList::generateCountsHistogramPulseTime(const MantidVec &X,
  * @param tofFactor :: time of flight factor
  * @param tofOffset :: time of flight offset
  */
-void
-EventList::generateCountsHistogramTimeAtSample(const MantidVec &X, MantidVec &Y,
-                                               const double &tofFactor,
-                                               const double &tofOffset) const {
+void EventList::generateCountsHistogramTimeAtSample(
+    const MantidVec &X, MantidVec &Y, const double &tofFactor,
+    const double &tofOffset) const {
   // For slight speed=up.
   size_t x_size = X.size();
 

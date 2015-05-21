@@ -1490,9 +1490,8 @@ ILiveListener::RunStatus SNSLiveEventDataListener::runStatus() {
 // are
 // older than we requested.)
 // Returns false if the packet should be processed, true if is should be ignored
-bool
-SNSLiveEventDataListener::ignorePacket(const ADARA::PacketHeader &hdr,
-                                       const ADARA::RunStatus::Enum status) {
+bool SNSLiveEventDataListener::ignorePacket(
+    const ADARA::PacketHeader &hdr, const ADARA::RunStatus::Enum status) {
   // Since we're filtering based on time (either the absolute timestamp or
   // nothing
   // before the start of the most recent run), once we've determined a given

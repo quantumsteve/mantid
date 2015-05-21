@@ -36,7 +36,7 @@ Code Documentation is available at: <http://doxygen.mantidproject.org>
 class DLLExport MantidWebServiceAPIJobManager
     : public Mantid::API::IRemoteJobManager {
 public:
-  virtual ~MantidWebServiceAPIJobManager() {};
+  virtual ~MantidWebServiceAPIJobManager(){};
 
   void authenticate(const std::string &username, const std::string &password);
 
@@ -71,17 +71,17 @@ public:
 protected:
   /// Use the helper for these operations
   virtual std::istream &httpGet(const std::string &path,
-                        const std::string &query_str = "",
-                        const std::string &username = "",
-                        const std::string &password = "") const {
+                                const std::string &query_str = "",
+                                const std::string &username = "",
+                                const std::string &password = "") const {
     return m_helper.httpGet(path, query_str, username, password);
   }
 
   virtual std::istream &
   httpPost(const std::string &path,
            const MantidWebServiceAPIHelper::PostDataMap &postData,
-           const MantidWebServiceAPIHelper::PostDataMap &fileData =
-               MantidWebServiceAPIHelper::PostDataMap(),
+           const MantidWebServiceAPIHelper::PostDataMap &
+               fileData = MantidWebServiceAPIHelper::PostDataMap(),
            const std::string &username = "",
            const std::string &password = "") const {
     return m_helper.httpPost(path, postData, fileData, username, password);

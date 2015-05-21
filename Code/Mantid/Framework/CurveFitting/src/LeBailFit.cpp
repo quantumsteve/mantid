@@ -692,8 +692,8 @@ void LeBailFit::storeBackgroundParameters(vector<double> &bkgdparamvec) {
   * @param bkgdparamvec :: vector holding the background parameters whose order
  * is same in background function
   */
-void
-LeBailFit::recoverBackgroundParameters(const vector<double> &bkgdparamvec) {
+void LeBailFit::recoverBackgroundParameters(
+    const vector<double> &bkgdparamvec) {
   for (size_t i = 0; i < m_numberBkgdParameters; ++i) {
     m_backgroundFunction->setParameter(i, bkgdparamvec[i]);
   }
@@ -2297,8 +2297,9 @@ bool LeBailFit::proposeNewValues(vector<string> mcgroup, Rfactor r,
   *
   * @return :: new value in boundary
   */
-double LeBailFit::limitProposedValueInBound(const Parameter &param, double newvalue,
-                                            double direction, int choice) {
+double LeBailFit::limitProposedValueInBound(const Parameter &param,
+                                            double newvalue, double direction,
+                                            int choice) {
   if (choice == 0) {
     // Half distance
     if (direction > 0) {

@@ -6,11 +6,11 @@ using Mantid::PythonInterface::PropertyWithValueExporter;
 void export_BasicPropertyWithValueTypes()
 // clang-format on
 {
-  // cut down copy-and-paste code
-#define EXPORT_PROP(CType, ExportName) \
+// cut down copy-and-paste code
+#define EXPORT_PROP(CType, ExportName)                                         \
   PropertyWithValueExporter<CType>::define(ExportName);
 
-  //ints & vectors
+  // ints & vectors
   EXPORT_PROP(int, "IntPropertyWithValue");
   EXPORT_PROP(std::vector<int>, "VectorIntPropertyWithValue");
   EXPORT_PROP(unsigned int, "UIntPropertyWithValue");
@@ -24,7 +24,8 @@ void export_BasicPropertyWithValueTypes()
   EXPORT_PROP(long long, "LongLongPropertyWithValue");
   EXPORT_PROP(std::vector<long long>, "VectorLongLongPropertyWithValue");
   EXPORT_PROP(unsigned long long, "ULongLongPropertyWithValue");
-  EXPORT_PROP(std::vector<unsigned long long>, "VectorULongLongPropertyWithValue");
+  EXPORT_PROP(std::vector<unsigned long long>,
+              "VectorULongLongPropertyWithValue");
   // double
   EXPORT_PROP(double, "FloatPropertyWithValue");
   EXPORT_PROP(std::vector<double>, "VectorFloatPropertyWithValue");
@@ -34,7 +35,6 @@ void export_BasicPropertyWithValueTypes()
   // std::string
   EXPORT_PROP(std::string, "StringPropertyWithValue");
   EXPORT_PROP(std::vector<std::string>, "VectorStringPropertyWithValue");
-
 
 #undef EXPORT_PROP
 }

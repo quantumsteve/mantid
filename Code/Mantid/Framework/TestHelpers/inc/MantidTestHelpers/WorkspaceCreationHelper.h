@@ -294,7 +294,8 @@ Mantid::DataObjects::RebinnedOutput_sptr CreateRebinnedOutputWorkspace();
 
 /// Create a simple peaks workspace containing the given number of peaks
 boost::shared_ptr<Mantid::DataObjects::PeaksWorkspace>
-createPeaksWorkspace(const int numPeaks = 2, const bool createOrientedLattice=false);
+createPeaksWorkspace(const int numPeaks = 2,
+                     const bool createOrientedLattice = false);
 /**Build table workspace with preprocessed detectors for existign worksapce with
  * instrument */
 boost::shared_ptr<Mantid::DataObjects::TableWorkspace>

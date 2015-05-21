@@ -203,8 +203,8 @@ void CreateDummyCalFile::exec() {
   return;
 }
 
-bool
-CreateDummyCalFile::groupingFileDoesExist(const std::string &filename) const {
+bool CreateDummyCalFile::groupingFileDoesExist(
+    const std::string &filename) const {
   std::ifstream file(filename.c_str());
   // Check if the file already exists
   if (!file)

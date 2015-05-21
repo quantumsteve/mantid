@@ -70,10 +70,12 @@ void RemoveMaskedSpectra::exec() {
   MatrixWorkspace_sptr inputWorkspace = getProperty("InputWorkspace");
   MatrixWorkspace_sptr maskedWorkspace = getProperty("MaskedWorkspace");
 
-  if (!maskedWorkspace){
+  if (!maskedWorkspace) {
     maskedWorkspace = inputWorkspace;
-  } else if (inputWorkspace->getNumberHistograms() != maskedWorkspace->getNumberHistograms()) {
-    throw std::runtime_error("Masked workspace has a different number of spectra.");
+  } else if (inputWorkspace->getNumberHistograms() !=
+             maskedWorkspace->getNumberHistograms()) {
+    throw std::runtime_error(
+        "Masked workspace has a different number of spectra.");
   }
 
   // Find indices of the unmasked spectra.
@@ -89,7 +91,8 @@ void RemoveMaskedSpectra::exec() {
 
   extract->execute();
 
-  MatrixWorkspace_sptr outputWorkspace = extract->getProperty("OutputWorkspace");
+  MatrixWorkspace_sptr outputWorkspace =
+      extract->getProperty("OutputWorkspace");
   setProperty("OutputWorkspace", outputWorkspace);
 }
 
@@ -98,7 +101,8 @@ void RemoveMaskedSpectra::exec() {
 /// @param indices :: A reference to a vector to fill with the indices.
 /// @param maskedWorkspace :: A workspace with masking information.
 void RemoveMaskedSpectra::makeIndexList(
-    std::vector<specid_t> &indices, const API::MatrixWorkspace *maskedWorkspace) {
+    std::vector<specid_t> &indices,
+    const API::MatrixWorkspace *maskedWorkspace) {
   auto mask = dynamic_cast<const DataObjects::MaskWorkspace *>(maskedWorkspace);
   if (mask) {
     for (size_t i = 0; i < mask->getNumberHistograms(); ++i) {

@@ -353,8 +353,8 @@ V3D Matrix<T>::operator*(const V3D &Vx) const
     throw Kernel::Exception::MisMatch<size_t>(ny, 3, "Matrix::operator*(V3D)");
 
   V3D v;
-  for(size_t i = 0; i < nx; ++i) {
-      v[i] = V[i][0] * Vx.X() + V[i][1] * Vx.Y() + V[i][2] * Vx.Z();
+  for (size_t i = 0; i < nx; ++i) {
+    v[i] = V[i][0] * Vx.X() + V[i][1] * Vx.Y() + V[i][2] * Vx.Z();
   }
 
   return v;

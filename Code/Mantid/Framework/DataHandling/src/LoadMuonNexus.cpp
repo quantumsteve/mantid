@@ -54,10 +54,9 @@ void LoadMuonNexus::init() {
   declareProperty("SpectrumMin", (int64_t)EMPTY_INT(), mustBePositive,
                   "Index number of the first spectrum to read\n"
                   "(default 1)");
-  declareProperty(
-      "SpectrumMax", (int64_t)EMPTY_INT(), mustBePositive,
-      "Index of last spectrum to read\n"
-      "(default the last spectrum)");
+  declareProperty("SpectrumMax", (int64_t)EMPTY_INT(), mustBePositive,
+                  "Index of last spectrum to read\n"
+                  "(default the last spectrum)");
 
   declareProperty(new ArrayProperty<specid_t>("SpectrumList"),
                   "Array, or comma separated list, of indexes of spectra to\n"
@@ -135,8 +134,8 @@ void LoadMuonNexus::checkOptionalProperties() {
 }
 
 /// Run the Child Algorithm LoadInstrument
-void
-LoadMuonNexus::runLoadInstrument(DataObjects::Workspace2D_sptr localWorkspace) {
+void LoadMuonNexus::runLoadInstrument(
+    DataObjects::Workspace2D_sptr localWorkspace) {
 
   IAlgorithm_sptr loadInst = createChildAlgorithm("LoadInstrument");
 

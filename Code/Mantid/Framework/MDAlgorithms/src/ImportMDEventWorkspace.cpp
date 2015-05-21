@@ -39,7 +39,6 @@ using namespace DataObjects;
 using namespace Geometry;
 using namespace Kernel;
 
-
 // Register the algorithm into the AlgorithmFactory
 DECLARE_ALGORITHM(ImportMDEventWorkspace)
 

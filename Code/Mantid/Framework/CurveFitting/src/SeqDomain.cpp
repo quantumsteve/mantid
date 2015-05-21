@@ -109,10 +109,9 @@ void SeqDomain::rwpVal(const CostFuncRwp &rwp) {
  * @param evalDeriv :: Flag to evaluate the first derivatives
  * @param evalHessian :: Flag to evaluate the Hessian (second derivatives)
  */
-void
-SeqDomain::leastSquaresValDerivHessian(const CostFuncLeastSquares &leastSquares,
-                                       bool evalFunction, bool evalDeriv,
-                                       bool evalHessian) {
+void SeqDomain::leastSquaresValDerivHessian(
+    const CostFuncLeastSquares &leastSquares, bool evalFunction, bool evalDeriv,
+    bool evalHessian) {
   API::FunctionDomain_sptr domain;
   API::FunctionValues_sptr values;
   const size_t n = getNDomains();

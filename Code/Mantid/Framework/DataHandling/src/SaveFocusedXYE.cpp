@@ -66,18 +66,18 @@ void SaveFocusedXYE::exec() {
   std::string filename = getProperty("Filename");
   std::string ext;
   {
-      Poco::Path path(filename);
-      std::string directory = path.parent().toString();
-      std::string name = path.getFileName();
+    Poco::Path path(filename);
+    std::string directory = path.parent().toString();
+    std::string name = path.getFileName();
 
-      std::size_t pos = name.find_first_of(".");
-      if (pos != std::string::npos) // Remove the extension
-      {
-        ext = name.substr(pos + 1, name.npos);
-        name = name.substr(0, pos);
-      }
+    std::size_t pos = name.find_first_of(".");
+    if (pos != std::string::npos) // Remove the extension
+    {
+      ext = name.substr(pos + 1, name.npos);
+      name = name.substr(0, pos);
+    }
 
-      filename = Poco::Path(directory, name).toString();
+    filename = Poco::Path(directory, name).toString();
   }
 
   const bool append = getProperty("Append");

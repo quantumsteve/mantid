@@ -76,8 +76,7 @@ int LoadIsawPeaks::confidence(Kernel::FileDescriptor &descriptor) const {
       getWord(in, false);
     readToEndOfLine(in, true);
     confidence = 95;
-  }
-  catch (std::exception &) {
+  } catch (std::exception &) {
   }
   return confidence;
 }
@@ -132,8 +131,7 @@ LoadIsawPeaks::ApplyCalibInfo(std::ifstream &in, std::string startChar,
     V3D sampPos = instr->getSample()->getPos();
     SCDCalibratePanels::FixUpSourceParameterMap(instr, L1 / 100, sampPos,
                                                 parMap1);
-  }
-  catch (...) {
+  } catch (...) {
     g_log.error() << "Invalid L1 or Time offset" << std::endl;
     throw std::invalid_argument("Invalid L1 or Time offset");
   }
@@ -176,8 +174,7 @@ LoadIsawPeaks::ApplyCalibInfo(std::ifstream &in, std::string startChar,
       iss >> bankNum >> nrows >> ncols >> width >> height >> depth >> detD >>
           Centx >> Centy >> Centz >> Basex >> Basey >> Basez >> Upx >> Upy >>
           Upz;
-    }
-    catch (...) {
+    } catch (...) {
 
       g_log.error() << "incorrect type of data for panel " << std::endl;
       throw std::length_error("incorrect type of data for panel ");
@@ -548,8 +545,7 @@ void LoadIsawPeaks::appendFile(PeaksWorkspace_sptr outWS,
       peak.setWavelength(wl.singleFromTOF(tof));
       // Add the peak to workspace
       outWS->addPeak(peak);
-    }
-    catch (std::runtime_error &e) {
+    } catch (std::runtime_error &e) {
       g_log.warning() << "Error reading peak SEQN " << seqNum << " : "
                       << e.what() << std::endl;
     }

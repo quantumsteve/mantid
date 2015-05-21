@@ -142,7 +142,7 @@ struct EntryHeader {
   char FilenamePrefix[155];
 };
 
-template <size_t N> int64_t octalToInt(char (&str)[N]);
+template <size_t N> int64_t octalToInt(char(&str)[N]);
 
 class File {
 
@@ -190,7 +190,6 @@ public:
   size_t read(void *dst, size_t size);
   int read_byte();
 };
-
 }
 }
 }

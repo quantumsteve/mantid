@@ -984,9 +984,9 @@ double FitOneSinglePeak::getFitCostFunctionValue() { return m_bestRwp; }
 //----------------------------------------------------------------------------------------------
 /** Get the fitting error of both peak function and background function
   */
-void
-FitOneSinglePeak::getFitError(std::map<std::string, double> &peakerrormap,
-                              std::map<std::string, double> &bkgderrormap) {
+void FitOneSinglePeak::getFitError(
+    std::map<std::string, double> &peakerrormap,
+    std::map<std::string, double> &bkgderrormap) {
   peakerrormap.clear();
   bkgderrormap.clear();
 
@@ -1469,9 +1469,9 @@ void FitPeak::prescreenInputData() {
 /** Set up the output workspaces
   * including (1) data workspace (2) function parameter workspace
   */
-void
-FitPeak::setupOutput(const std::map<std::string, double> &m_fitErrorPeakFunc,
-                     const std::map<std::string, double> &m_fitErrorBkgdFunc) {
+void FitPeak::setupOutput(
+    const std::map<std::string, double> &m_fitErrorPeakFunc,
+    const std::map<std::string, double> &m_fitErrorBkgdFunc) {
   // TODO - Need to retrieve useful information from FitOneSinglePeak object
   // (think of how)
   size_t i_minFitX = getVectorIndex(m_dataWS->readX(m_wsIndex), m_minFitX);

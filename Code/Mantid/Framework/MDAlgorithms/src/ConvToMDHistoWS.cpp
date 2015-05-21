@@ -19,10 +19,10 @@ workspaces
 @param inWSWrapper -- the class wrapping the target MD workspace
 @param ignoreZeros  -- if zero value signals should be rejected
 */
-size_t ConvToMDHistoWS::initialize(
-    const MDWSDescription &WSD,
-    boost::shared_ptr<MDEventWSWrapper> inWSWrapper,
-    bool ignoreZeros) {
+size_t
+ConvToMDHistoWS::initialize(const MDWSDescription &WSD,
+                            boost::shared_ptr<MDEventWSWrapper> inWSWrapper,
+                            bool ignoreZeros) {
 
   size_t numSpec = ConvToMDBase::initialize(WSD, inWSWrapper, ignoreZeros);
 
@@ -30,8 +30,8 @@ size_t ConvToMDHistoWS::initialize(
   DataObjects::Workspace2D_const_sptr pWS2D =
       boost::dynamic_pointer_cast<const DataObjects::Workspace2D>(m_InWS2D);
   if (!pWS2D)
-    throw(std::logic_error(
-        "ConvToDataObjectsHisto should work with defined histrogram workspace"));
+    throw(std::logic_error("ConvToDataObjectsHisto should work with defined "
+                           "histrogram workspace"));
 
   return numSpec;
 }

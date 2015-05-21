@@ -17,9 +17,8 @@ void export_FunctionProperty()
   typedef boost::shared_ptr<IFunction> HeldType;
   PropertyWithValueExporter<HeldType>::define("FunctionPropertyWithValue");
 
-
-  class_<FunctionProperty, bases<PropertyWithValue<HeldType>>, boost::noncopyable>("FunctionProperty", no_init)
-    .def(init<const std::string &>(arg("name"), "Constructs a FunctionProperty with the given name"))
-    ;
+  class_<FunctionProperty, bases<PropertyWithValue<HeldType>>,
+         boost::noncopyable>("FunctionProperty", no_init)
+      .def(init<const std::string &>(
+          arg("name"), "Constructs a FunctionProperty with the given name"));
 }
-

@@ -421,8 +421,8 @@ private:
 Check for a set of synthetic logs associated with multi-period log data. Raise
 warnings where necessary.
 */
-void
-LoadISISNexus2::validateMultiPeriodLogs(Mantid::API::MatrixWorkspace_sptr ws) {
+void LoadISISNexus2::validateMultiPeriodLogs(
+    Mantid::API::MatrixWorkspace_sptr ws) {
   const Run &run = ws->run();
   if (!run.hasProperty("current_period")) {
     g_log.warning("Workspace has no current_period log.");
@@ -733,10 +733,10 @@ size_t LoadISISNexus2::prepareSpectraBlocks(
 * @param update_spectra2det_mapping :: reset spectra-detector map to the one
 * calculated earlier. (Warning! -- this map has to be calculated correctly!)
 */
-void
-LoadISISNexus2::loadPeriodData(int64_t period, NXEntry &entry,
-                               DataObjects::Workspace2D_sptr &local_workspace,
-                               bool update_spectra2det_mapping) {
+void LoadISISNexus2::loadPeriodData(
+    int64_t period, NXEntry &entry,
+    DataObjects::Workspace2D_sptr &local_workspace,
+    bool update_spectra2det_mapping) {
   int64_t hist_index = 0;
   int64_t period_index(period - 1);
   // int64_t first_monitor_spectrum = 0;
@@ -925,9 +925,8 @@ void LoadISISNexus2::runLoadInstrument(
 *   @param local_workspace :: The workspace to load the run information in to
 *   @param entry :: The Nexus entry
 */
-void
-LoadISISNexus2::loadRunDetails(DataObjects::Workspace2D_sptr &local_workspace,
-                               NXEntry &entry) {
+void LoadISISNexus2::loadRunDetails(
+    DataObjects::Workspace2D_sptr &local_workspace, NXEntry &entry) {
   API::Run &runDetails = local_workspace->mutableRun();
   // Charge is stored as a float
   m_proton_charge = static_cast<double>(entry.getFloat("proton_charge"));
@@ -1059,9 +1058,8 @@ void LoadISISNexus2::parseISODateTime(const std::string &datetime_iso,
 *   @param local_workspace :: The workspace to load the logs to.
 *   @param entry :: The Nexus entry
 */
-void
-LoadISISNexus2::loadSampleData(DataObjects::Workspace2D_sptr &local_workspace,
-                               NXEntry &entry) {
+void LoadISISNexus2::loadSampleData(
+    DataObjects::Workspace2D_sptr &local_workspace, NXEntry &entry) {
   /// Sample geometry
   NXInt spb = entry.openNXInt("isis_vms_compat/SPB");
   // Just load the index we need, not the whole block. The flag is the third

@@ -21,8 +21,7 @@ private:
   double m_theta;
 
 public:
-  CalculateReflectometryK(double theta)
-      : m_theta(theta) {}
+  CalculateReflectometryK(double theta) : m_theta(theta) {}
   ~CalculateReflectometryK(){};
   double execute(const double &wavelength) {
     double wavenumber = 2 * M_PI / wavelength;

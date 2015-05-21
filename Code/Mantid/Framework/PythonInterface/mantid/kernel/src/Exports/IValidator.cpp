@@ -11,7 +11,5 @@ void export_IValidator()
 {
   register_ptr_to_python<boost::shared_ptr<IValidator>>();
 
-  class_<IValidator, boost::noncopyable>("IValidator", no_init)
-    ;
+  class_<IValidator, boost::noncopyable>("IValidator", no_init);
 }
-

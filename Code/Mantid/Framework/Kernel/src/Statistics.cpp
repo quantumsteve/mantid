@@ -11,7 +11,6 @@
 #include <stdexcept>
 #include <functional>
 
-
 namespace Mantid {
 namespace Kernel {
 
@@ -184,7 +183,7 @@ Statistics getStatistics(const vector<TYPE> &data, const bool sorted) {
 /// Getting statistics of a string array should just give a bunch of NaNs
 template <>
 DLLExport Statistics
-    getStatistics<string>(const vector<string> &data, const bool sorted) {
+getStatistics<string>(const vector<string> &data, const bool sorted) {
   UNUSED_ARG(sorted);
   UNUSED_ARG(data);
   return getNanStatistics();
@@ -193,7 +192,7 @@ DLLExport Statistics
 /// Getting statistics of a boolean array should just give a bunch of NaNs
 template <>
 DLLExport Statistics
-    getStatistics<bool>(const vector<bool> &data, const bool sorted) {
+getStatistics<bool>(const vector<bool> &data, const bool sorted) {
   UNUSED_ARG(sorted);
   UNUSED_ARG(data);
   return getNanStatistics();
@@ -391,7 +390,7 @@ std::vector<double> getMomentsAboutMean(const std::vector<TYPE> &x,
 // --------------------------------
 #define INSTANTIATE(TYPE)                                                      \
   template MANTID_KERNEL_DLL Statistics                                        \
-      getStatistics<TYPE>(const vector<TYPE> &, const bool);                   \
+  getStatistics<TYPE>(const vector<TYPE> &, const bool);                       \
   template MANTID_KERNEL_DLL std::vector<double> getZscore<TYPE>(              \
       const vector<TYPE> &, const bool);                                       \
   template MANTID_KERNEL_DLL std::vector<double> getModifiedZscore<TYPE>(      \

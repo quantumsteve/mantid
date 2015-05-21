@@ -74,9 +74,11 @@ public:
   /// Cache a lookup of grouped detIDs to member IDs
   virtual void cacheDetectorGroupings(const det2group_map &mapping);
   /// Returns the detector IDs that make up the group that this ID is part of
-  virtual const std::vector<detid_t> &getGroupMembers(const detid_t detID) const;
+  virtual const std::vector<detid_t> &
+  getGroupMembers(const detid_t detID) const;
   /// Get a detector or detector group from an ID
-  virtual  Geometry::IDetector_const_sptr getDetectorByID(const detid_t detID) const;
+  virtual Geometry::IDetector_const_sptr
+  getDetectorByID(const detid_t detID) const;
 
   /// Set an object describing the source properties and take ownership
   virtual void setModeratorModel(ModeratorModel *source);
@@ -110,17 +112,20 @@ public:
   /// Easy access to the efixed value for this run & detector ID
   virtual double getEFixed(const detid_t detID) const;
   /// Easy access to the efixed value for this run & optional detector
-  virtual double getEFixed(const Geometry::IDetector_const_sptr detector =
-                       Geometry::IDetector_const_sptr()) const;
+  virtual double
+  getEFixed(const Geometry::IDetector_const_sptr
+                detector = Geometry::IDetector_const_sptr()) const;
   /// Set the efixed value for a given detector ID
   virtual void setEFixed(const detid_t detID, const double value);
 
   /// Saves this experiment description to the open NeXus file
   virtual void saveExperimentInfoNexus(::NeXus::File *file) const;
   /// Loads an experiment description from the open NeXus file
-  virtual void loadExperimentInfoNexus(::NeXus::File *file, std::string &parameterStr);
+  virtual void loadExperimentInfoNexus(::NeXus::File *file,
+                                       std::string &parameterStr);
   /// Load the instrument from an open NeXus file.
-  virtual void loadInstrumentInfoNexus(::NeXus::File *file, std::string &parameterStr);
+  virtual void loadInstrumentInfoNexus(::NeXus::File *file,
+                                       std::string &parameterStr);
   /// Load the sample and log info from an open NeXus file.
   virtual void loadSampleAndLogInfoNexus(::NeXus::File *file);
   /// Populate the parameter map given a string

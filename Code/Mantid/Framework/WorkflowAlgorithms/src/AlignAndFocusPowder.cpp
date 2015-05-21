@@ -863,7 +863,7 @@ AlignAndFocusPowder::conjoinWorkspaces(API::MatrixWorkspace_sptr ws1,
   // Rename spectrum number
   if (offset >= 1) {
     for (size_t i = 0; i < nspec2; ++i) {
-      specid_t newspecid = maxspecid1 + static_cast<specid_t>((i)+offset);
+      specid_t newspecid = maxspecid1 + static_cast<specid_t>((i) + offset);
       outws->getSpectrum(nspec1 + i)->setSpectrumNo(newspecid);
       // ISpectrum* spec = outws->getSpectrum(nspec1+i);
       // if (spec)

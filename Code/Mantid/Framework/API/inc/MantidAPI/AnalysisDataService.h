@@ -183,30 +183,26 @@ typedef Mantid::Kernel::DataService<Mantid::API::Workspace>::AddNotification
 typedef const Poco::AutoPtr<Mantid::Kernel::DataService<
     Mantid::API::Workspace>::AddNotification> &WorkspaceAddNotification_ptr;
 
-typedef Mantid::Kernel::DataService<
-    Mantid::API::Workspace>::BeforeReplaceNotification
-    WorkspaceBeforeReplaceNotification;
+typedef Mantid::Kernel::DataService<Mantid::API::Workspace>::
+    BeforeReplaceNotification WorkspaceBeforeReplaceNotification;
 typedef const Poco::AutoPtr<Mantid::Kernel::DataService<
     Mantid::API::Workspace>::BeforeReplaceNotification> &
     WorkspaceBeforeReplaceNotification_ptr;
 
-typedef Mantid::Kernel::DataService<
-    Mantid::API::Workspace>::AfterReplaceNotification
-    WorkspaceAfterReplaceNotification;
+typedef Mantid::Kernel::DataService<Mantid::API::Workspace>::
+    AfterReplaceNotification WorkspaceAfterReplaceNotification;
 typedef const Poco::AutoPtr<Mantid::Kernel::DataService<
     Mantid::API::Workspace>::AfterReplaceNotification> &
     WorkspaceAfterReplaceNotification_ptr;
 
-typedef Mantid::Kernel::DataService<
-    Mantid::API::Workspace>::PreDeleteNotification
-    WorkspacePreDeleteNotification;
+typedef Mantid::Kernel::DataService<Mantid::API::Workspace>::
+    PreDeleteNotification WorkspacePreDeleteNotification;
 typedef const Poco::AutoPtr<Mantid::Kernel::DataService<
     Mantid::API::Workspace>::PreDeleteNotification> &
     WorkspacePreDeleteNotification_ptr;
 
-typedef Mantid::Kernel::DataService<
-    Mantid::API::Workspace>::PostDeleteNotification
-    WorkspacePostDeleteNotification;
+typedef Mantid::Kernel::DataService<Mantid::API::Workspace>::
+    PostDeleteNotification WorkspacePostDeleteNotification;
 typedef const Poco::AutoPtr<Mantid::Kernel::DataService<
     Mantid::API::Workspace>::PostDeleteNotification> &
     WorkspacePostDeleteNotification_ptr;

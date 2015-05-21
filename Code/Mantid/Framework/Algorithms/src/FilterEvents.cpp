@@ -669,8 +669,8 @@ void FilterEvents::setupDirectTOFCorrection(API::MatrixWorkspace_sptr corrws) {
 /** Calculate TOF correction for indirect geometry inelastic instrument
   * Time = T_pulse + TOF - L2/sqrt(E_fix * 2 * meV / mass)
   */
-void
-FilterEvents::setupIndirectTOFCorrection(API::MatrixWorkspace_sptr corrws) {
+void FilterEvents::setupIndirectTOFCorrection(
+    API::MatrixWorkspace_sptr corrws) {
   g_log.debug("Start to set up indirect TOF correction. ");
 
   // A constant among all spectra

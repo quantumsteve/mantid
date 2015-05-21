@@ -129,8 +129,9 @@ createDiffractionEventWorkspace(int numEvents, int numPixels, int numBins) {
  * @param coord :: Required coordinate system
  * @return MDEW sptr
  */
-MDEventWorkspace3Lean::sptr makeFakeMDEventWorkspace(const std::string &wsName,
-                                                     long numEvents, Kernel::SpecialCoordinateSystem coord) {
+MDEventWorkspace3Lean::sptr
+makeFakeMDEventWorkspace(const std::string &wsName, long numEvents,
+                         Kernel::SpecialCoordinateSystem coord) {
   // ---------- Make a file-backed MDEventWorkspace -----------------------
   MDEventWorkspace3Lean::sptr ws1 =
       MDEventsTestHelper::makeMDEW<3>(10, 0.0, 10.0, 0);

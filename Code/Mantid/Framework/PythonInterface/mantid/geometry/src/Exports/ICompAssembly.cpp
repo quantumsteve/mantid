@@ -12,10 +12,10 @@ void export_ICompAssembly()
 {
   register_ptr_to_python<boost::shared_ptr<ICompAssembly>>();
 
-  class_<ICompAssembly, boost::python::bases<IComponent>, boost::noncopyable>("ICompAssembly", no_init)
-    .def("nelements", &ICompAssembly::nelements, "Returns the number of elements in the assembly")
-    .def("__getitem__", &ICompAssembly::operator[], "Return the component at the given index")
-    ;
-
+  class_<ICompAssembly, boost::python::bases<IComponent>, boost::noncopyable>(
+      "ICompAssembly", no_init)
+      .def("nelements", &ICompAssembly::nelements,
+           "Returns the number of elements in the assembly")
+      .def("__getitem__", &ICompAssembly::operator[],
+           "Return the component at the given index");
 }
-

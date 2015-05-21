@@ -6,61 +6,54 @@
 #include "ICatTestHelper.h"
 
 using namespace Mantid::ICat;
-class CatalogLoginTest: public CxxTest::TestSuite
-{
+class CatalogLoginTest : public CxxTest::TestSuite {
 public:
   /// Skip all unit tests if ICat server is down
-  bool skipTests()
-  {
-    return ICatTestHelper::skipTests();
+  bool skipTests() { return ICatTestHelper::skipTests(); }
+
+  void testInit() {
+    Mantid::Kernel::ConfigService::Instance().setString("default.facility",
+                                                        "ISIS");
+
+    CatalogLogin loginobj;
+    TS_ASSERT_THROWS_NOTHING(loginobj.initialize());
+    TS_ASSERT(loginobj.isInitialized());
   }
+  void testLogin() {
+    CatalogLogin loginobj;
 
-	void testInit()
-	{    
-		Mantid::Kernel::ConfigService::Instance().setString("default.facility", "ISIS");
+    if (!loginobj.isInitialized())
+      loginobj.initialize();
 
-		CatalogLogin loginobj;
-		TS_ASSERT_THROWS_NOTHING( loginobj.initialize());
-		TS_ASSERT( loginobj.isInitialized() );
-	}
-	void testLogin()
-	{
-		CatalogLogin loginobj;
+    // Should fail because mandatory parameter has not been set
+    TS_ASSERT_THROWS(loginobj.execute(), std::runtime_error);
 
-	   if ( !loginobj.isInitialized() ) loginobj.initialize();
+    // Now set it...
+    loginobj.setPropertyValue("Username", "mantid_test");
+    loginobj.setPropertyValue("Password", "mantidtestuser");
+    // loginobj.setPropertyValue("DBServer", "");
 
-		// Should fail because mandatory parameter has not been set
-		TS_ASSERT_THROWS(loginobj.execute(),std::runtime_error);
+    TS_ASSERT_THROWS_NOTHING(loginobj.execute());
+    TS_ASSERT(loginobj.isExecuted());
+  }
+  void testLoginFail() {
 
-		// Now set it...
-		loginobj.setPropertyValue("Username", "mantid_test");
-		loginobj.setPropertyValue("Password", "mantidtestuser");
-		//loginobj.setPropertyValue("DBServer", "");
-		
-		TS_ASSERT_THROWS_NOTHING(loginobj.execute());
-		TS_ASSERT(loginobj.isExecuted() );
-		
-	}
-	void testLoginFail()
-	{
-		
-		CatalogLogin loginobj;
+    CatalogLogin loginobj;
 
-	   if ( !loginobj.isInitialized() ) loginobj.initialize();
+    if (!loginobj.isInitialized())
+      loginobj.initialize();
 
-		// Should fail because mandatory parameter has not been set
-		TS_ASSERT_THROWS(loginobj.execute(),std::runtime_error);
+    // Should fail because mandatory parameter has not been set
+    TS_ASSERT_THROWS(loginobj.execute(), std::runtime_error);
 
-		//invalid username
-		loginobj.setPropertyValue("Username", "mantid_test");
-		loginobj.setPropertyValue("Password", "mantidtestuser1");
-		//loginobj.setPropertyValue("DBServer", "");
-		
-		TS_ASSERT_THROWS_NOTHING(loginobj.execute());
-		//should fail
-		TS_ASSERT( !loginobj.isExecuted() );
-	}
+    // invalid username
+    loginobj.setPropertyValue("Username", "mantid_test");
+    loginobj.setPropertyValue("Password", "mantidtestuser1");
+    // loginobj.setPropertyValue("DBServer", "");
 
-		
+    TS_ASSERT_THROWS_NOTHING(loginobj.execute());
+    // should fail
+    TS_ASSERT(!loginobj.isExecuted());
+  }
 };
 #endif

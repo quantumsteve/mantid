@@ -204,10 +204,9 @@ SplineSmoothing::convertBinnedData(MatrixWorkspace_sptr workspace) {
  * @param outputWorkspace :: The output workspace
  * @param row :: The row of spectra to use
  */
-void
-SplineSmoothing::calculateSmoothing(MatrixWorkspace_const_sptr inputWorkspace,
-                                    MatrixWorkspace_sptr outputWorkspace,
-                                    size_t row) const {
+void SplineSmoothing::calculateSmoothing(
+    MatrixWorkspace_const_sptr inputWorkspace,
+    MatrixWorkspace_sptr outputWorkspace, size_t row) const {
   // define the spline's parameters
   const auto &xIn = inputWorkspace->readX(row);
   size_t nData = xIn.size();

@@ -92,7 +92,8 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
     g_log.warning()
         << "==========================================================="
         << std::endl;
-    g_log.warning() << "mu=" << m_mu << std::endl << std::endl;
+    g_log.warning() << "mu=" << m_mu << std::endl
+                    << std::endl;
   }
 
   if (m_D.empty()) {
@@ -162,7 +163,8 @@ bool LevenbergMarquardtMDMinimizer::iterate(size_t) {
     for (size_t j = 0; j < n; ++j) {
       g_log.warning() << dx.get(j) << ' ';
     }
-    g_log.warning() << std::endl << std::endl;
+    g_log.warning() << std::endl
+                    << std::endl;
   }
 
   // restore scaling

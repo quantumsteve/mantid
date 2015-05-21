@@ -247,7 +247,8 @@ private:
   /// Map detector IDs to event lists.
   template <class T> void makeMapToEventLists(std::vector<T> &vectors);
 
-  void createWorkspaceIndexMaps(const bool monitors, const std::vector<std::string> &bankNames);
+  void createWorkspaceIndexMaps(const bool monitors,
+                                const std::vector<std::string> &bankNames);
   void loadEvents(API::Progress *const prog, const bool monitors);
   void createSpectraMapping(
       const std::string &nxsfile, const bool monitorsOnly,
@@ -270,9 +271,9 @@ private:
                         const std::string &classType);
 
   void loadTimeOfFlightData(::NeXus::File &file,
-                                   DataObjects::EventWorkspace_sptr WS,
-                                   const std::string &binsName,
-                                   size_t start_wi = 0, size_t end_wi = 0);
+                            DataObjects::EventWorkspace_sptr WS,
+                            const std::string &binsName, size_t start_wi = 0,
+                            size_t end_wi = 0);
 
   void filterDuringPause(API::MatrixWorkspace_sptr workspace);
 
@@ -283,8 +284,8 @@ private:
   void setTopEntryName();
 
   /// to re-use (copy) logs from data workspace to monitors, etc. workspace
-  void copyLogs(const DataObjects::EventWorkspace_sptr& from,
-                    DataObjects::EventWorkspace_sptr& to);
+  void copyLogs(const DataObjects::EventWorkspace_sptr &from,
+                DataObjects::EventWorkspace_sptr &to);
 
   /// to open the nexus file with specific exception handling/message
   void safeOpenFile(const std::string fname);

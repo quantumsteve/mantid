@@ -152,12 +152,11 @@ void MatrixWorkspace::updateSpectraUsing(const SpectrumDetectorMapping &map) {
   for (size_t j = 0; j < getNumberHistograms(); ++j) {
     auto spec = getSpectrum(j);
     try {
-      if(map.indexIsSpecNumber())
+      if (map.indexIsSpecNumber())
         spec->setDetectorIDs(
             map.getDetectorIDsForSpectrumNo(spec->getSpectrumNo()));
       else
-        spec->setDetectorIDs(
-            map.getDetectorIDsForSpectrumIndex(j));
+        spec->setDetectorIDs(map.getDetectorIDsForSpectrumIndex(j));
     } catch (std::out_of_range &e) {
       // Get here if the spectrum number is not in the map.
       spec->clearDetectorIDs();
@@ -350,9 +349,8 @@ spec2index_map MatrixWorkspace::getSpectrumToWorkspaceIndexMap() const {
 *  @param offset :: add this to the detector ID to get the index into the
 *vector.
 */
-void
-MatrixWorkspace::getSpectrumToWorkspaceIndexVector(std::vector<size_t> &out,
-                                                   specid_t &offset) const {
+void MatrixWorkspace::getSpectrumToWorkspaceIndexVector(
+    std::vector<size_t> &out, specid_t &offset) const {
   SpectraAxis *ax = dynamic_cast<SpectraAxis *>(this->m_axes[1]);
   if (!ax)
     throw std::runtime_error("MatrixWorkspace::getSpectrumToWorkspaceIndexMap: "
@@ -360,11 +358,11 @@ MatrixWorkspace::getSpectrumToWorkspaceIndexVector(std::vector<size_t> &out,
                              "generate a map.");
 
   // Find the min/max spectra IDs
-  specid_t min = std::numeric_limits<
-      specid_t>::max(); // So that any number will be less than this
-  specid_t max =
-      -std::numeric_limits<
-          specid_t>::max(); // So that any number will be greater than this
+  specid_t min = std::numeric_limits<specid_t>::max(); // So that any number
+                                                       // will be less than this
+  specid_t max = -std::numeric_limits<specid_t>::max(); // So that any number
+                                                        // will be greater than
+                                                        // this
   size_t length = ax->length();
   for (size_t i = 0; i < length; i++) {
     specid_t spec = ax->spectraNo(i);
@@ -514,9 +512,9 @@ void MatrixWorkspace::getDetectorIDToWorkspaceIndexVector(
 *  @param indexList ::   Returns a reference to the vector of indices (empty if
 *not a Workspace2D)
 */
-void
-MatrixWorkspace::getIndicesFromSpectra(const std::vector<specid_t> &spectraList,
-                                       std::vector<size_t> &indexList) const {
+void MatrixWorkspace::getIndicesFromSpectra(
+    const std::vector<specid_t> &spectraList,
+    std::vector<size_t> &indexList) const {
   // Clear the output index list
   indexList.clear();
   indexList.reserve(this->getNumberHistograms());

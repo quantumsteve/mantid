@@ -182,8 +182,8 @@ V3R SymmetryElementWithAxisGenerator::determineAxis(
 
   double sumOfElements = eigenVector.X() + eigenVector.Y() + eigenVector.Z();
 
-  if(sumOfElements < 0) {
-      eigenVector *= -1.0;
+  if (sumOfElements < 0) {
+    eigenVector *= -1.0;
   }
 
   gsl_matrix_free(eigenMatrix);

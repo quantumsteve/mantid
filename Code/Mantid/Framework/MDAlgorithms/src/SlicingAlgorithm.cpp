@@ -378,7 +378,7 @@ void SlicingAlgorithm::createGeneralTransform() {
   // Now, convert the original vector to the coordinates of the ORIGNAL ws, if
   // any
   if (m_originalWS) {
-    CoordTransform const*toOrig = m_inWS->getTransformToOriginal();
+    CoordTransform const *toOrig = m_inWS->getTransformToOriginal();
     m_translation = toOrig->applyVMD(m_translation);
   }
 
@@ -595,9 +595,10 @@ void SlicingAlgorithm::createAlignedTransform() {
   } else {
     // Changed # of dimensions - can't reverse the transform
     m_transformToOriginal = NULL;
-    g_log.warning("SlicingAlgorithm: Your slice will cause the output workspace to have less dimensions than the input. This will affect your ability to create subsequent slices.");
+    g_log.warning("SlicingAlgorithm: Your slice will cause the output "
+                  "workspace to have less dimensions than the input. This will "
+                  "affect your ability to create subsequent slices.");
   }
-   
 }
 
 //-----------------------------------------------------------------------------------------------

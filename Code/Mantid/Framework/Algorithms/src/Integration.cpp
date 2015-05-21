@@ -272,8 +272,7 @@ MatrixWorkspace_const_sptr Integration::getInputWorkspace() {
   }
 
   // To integrate point data it will be converted to histograms
-  if ( !temp->isHistogramData() )
-  {
+  if (!temp->isHistogramData()) {
     auto alg = this->createChildAlgorithm("ConvertToHistogram");
     alg->setProperty<MatrixWorkspace_sptr>("InputWorkspace", temp);
     std::string outName = "_" + temp->getName() + "_histogram";

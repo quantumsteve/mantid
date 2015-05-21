@@ -64,17 +64,16 @@ FABADAMinimizer::FABADAMinimizer() {
   declareProperty(
       new API::WorkspaceProperty<>("PDF", "PDF", Kernel::Direction::Output),
       "The name to give the output workspace");
-  declareProperty(new API::WorkspaceProperty<>("Chains", "",
-                                               Kernel::Direction::Output),
-                  "The name to give the output workspace");
-  declareProperty(new API::WorkspaceProperty<>(
-                      "ConvergedChain", "",
-                      Kernel::Direction::Output, API::PropertyMode::Optional),
-                  "The name to give the output workspace");
   declareProperty(
-      new API::WorkspaceProperty<API::ITableWorkspace>(
-          "CostFunctionTable", "", Kernel::Direction::Output),
+      new API::WorkspaceProperty<>("Chains", "", Kernel::Direction::Output),
       "The name to give the output workspace");
+  declareProperty(new API::WorkspaceProperty<>("ConvergedChain", "",
+                                               Kernel::Direction::Output,
+                                               API::PropertyMode::Optional),
+                  "The name to give the output workspace");
+  declareProperty(new API::WorkspaceProperty<API::ITableWorkspace>(
+                      "CostFunctionTable", "", Kernel::Direction::Output),
+                  "The name to give the output workspace");
   declareProperty(new API::WorkspaceProperty<API::ITableWorkspace>(
                       "Parameters", "", Kernel::Direction::Output),
                   "The name to give the output workspace");
@@ -194,8 +193,9 @@ bool FABADAMinimizer::iterate(size_t) {
       mt.seed(123 * (int(m_counter) +
                      45 * int(i))); // Numeros inventados para la seed
       boost::normal_distribution<double> distr(0.0, std::abs(m_jump[i]));
-      boost::variate_generator<
-          boost::mt19937, boost::normal_distribution<double>> gen(mt, distr);
+      boost::variate_generator<boost::mt19937,
+                               boost::normal_distribution<double>> gen(mt,
+                                                                       distr);
       step = gen();
     } else {
       step = m_jump[i];
@@ -571,7 +571,8 @@ void FABADAMinimizer::finalize() {
 
   // Read if necessary to show the workspace for the converged part of the
   // chain.
-  const bool outputConvergedChains = !getPropertyValue("ConvergedChain").empty();
+  const bool outputConvergedChains =
+      !getPropertyValue("ConvergedChain").empty();
 
   if (outputConvergedChains) {
     // Create the workspace for the converged part of the chain.
@@ -597,7 +598,8 @@ void FABADAMinimizer::finalize() {
   }
 
   // Read if necessary to show the workspace for the Chi square values.
-  const bool outputCostFunctionTable = !getPropertyValue("CostFunctionTable").empty();
+  const bool outputCostFunctionTable =
+      !getPropertyValue("CostFunctionTable").empty();
 
   if (outputCostFunctionTable) {
 

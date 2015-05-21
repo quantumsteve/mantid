@@ -45,7 +45,8 @@ TMDE(MDEventWorkspace)::MDEventWorkspace()
  */
 TMDE(MDEventWorkspace)::MDEventWorkspace(const MDEventWorkspace<MDE, nd> &other)
     : IMDEventWorkspace(other), data(NULL),
-      m_BoxController(other.m_BoxController->clone()), m_coordSystem(other.m_coordSystem) {
+      m_BoxController(other.m_BoxController->clone()),
+      m_coordSystem(other.m_coordSystem) {
 
   const MDBox<MDE, nd> *mdbox =
       dynamic_cast<const MDBox<MDE, nd> *>(other.data);

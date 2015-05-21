@@ -586,8 +586,7 @@ void LoadILLSANS::loadMetaData(const NeXus::NXEntry &entry,
  */
 double LoadILLSANS::calculateQ(const double lambda,
                                const double twoTheta) const {
-  return (4 * M_PI * std::sin(twoTheta * (M_PI / 180) / 2)) /
-         (lambda);
+  return (4 * M_PI * std::sin(twoTheta * (M_PI / 180) / 2)) / (lambda);
 }
 
 std::pair<double, double> LoadILLSANS::calculateQMaxQMin() {

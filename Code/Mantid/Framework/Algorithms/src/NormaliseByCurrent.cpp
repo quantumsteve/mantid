@@ -89,7 +89,6 @@ void NormaliseByCurrent::exec() {
   g_log.information() << "Normalisation current: " << charge << " uamps"
                       << std::endl;
 
-
   double invcharge = 1.0 / charge; // Inverse of the charge to be multiplied by
 
   // The operator overloads properly take into account of both EventWorkspaces
@@ -100,7 +99,8 @@ void NormaliseByCurrent::exec() {
   } else {
     inputWS *= invcharge;
   }
-  outputWS->mutableRun().addLogData(new Kernel::PropertyWithValue<double>("NormalizationFactor", charge));
+  outputWS->mutableRun().addLogData(
+      new Kernel::PropertyWithValue<double>("NormalizationFactor", charge));
   outputWS->setYUnitLabel("Counts per microAmp.hour");
 }
 

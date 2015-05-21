@@ -11,11 +11,9 @@ using namespace Mantid::Kernel;
 using std::string;
 using std::vector;
 
-class StatisticsTest : public CxxTest::TestSuite
-{
+class StatisticsTest : public CxxTest::TestSuite {
 public:
-  void testDoubleOdd()
-  {
+  void testDoubleOdd() {
     vector<double> data;
     data.push_back(17.2);
     data.push_back(18.1);
@@ -30,10 +28,8 @@ public:
     TS_ASSERT_EQUALS(stats.minimum, 12.6);
     TS_ASSERT_EQUALS(stats.maximum, 18.3);
     TS_ASSERT_EQUALS(stats.median, 17.2);
-
   }
-  void testZscores()
-  {
+  void testZscores() {
     vector<double> data;
     data.push_back(12);
     data.push_back(13);
@@ -62,11 +58,9 @@ public:
     std::vector<double> ZModscore = getModifiedZscore(data);
     TS_ASSERT_DELTA(ZModscore[4], 1.2365, 0.0001);
     TS_ASSERT_DELTA(ZModscore[6], 0.3372, 0.0001);
-    
   }
 
-  void testDoubleSingle()
-  {
+  void testDoubleSingle() {
     vector<double> data;
     data.push_back(42.);
 
@@ -79,8 +73,7 @@ public:
     TS_ASSERT_EQUALS(stats.median, 42.);
   }
 
-  void testInt32Even()
-  {
+  void testInt32Even() {
     vector<int32_t> data;
     data.push_back(1);
     data.push_back(2);
@@ -98,13 +91,9 @@ public:
     TS_ASSERT_EQUALS(stats.median, 3.5);
   }
 
-  bool my_isnan(const double number)
-  {
-    return number != number;
-  }
+  bool my_isnan(const double number) { return number != number; }
 
-  void testString()
-  {
+  void testString() {
     vector<string> data;
     data.push_back("hi there");
 
@@ -119,8 +108,7 @@ public:
 
   /** Test function to calculate Rwp
     */
-  void testRwp()
-  {
+  void testRwp() {
     vector<double> obsY(4);
     vector<double> calY(4);
     vector<double> obsE(4);
@@ -148,8 +136,7 @@ public:
 
   /** Test throw exception
     */
-  void testRwpException1()
-  {
+  void testRwpException1() {
     vector<double> obsY(4);
     vector<double> calY(4);
     vector<double> obsE(3);
@@ -174,8 +161,7 @@ public:
 
   /** Test throw exception on empty array
     */
-  void testRwpException2()
-  {
+  void testRwpException2() {
     vector<double> obsY;
     vector<double> calY;
     vector<double> obsE;
@@ -184,8 +170,7 @@ public:
   }
 
   /// Test moment calculations about origin and mean
-  void test_getMoments()
-  {
+  void test_getMoments() {
     const double mean = 5.;
     const double sigma = 4.;
     const double deltaX = .2;
@@ -193,9 +178,9 @@ public:
     // calculate to have same number of points left and right of function
     const double offsetX = mean - (.5 * deltaX * static_cast<double>(numX));
     // variance about origin
-    double expVar = mean*mean+sigma*sigma;
+    double expVar = mean * mean + sigma * sigma;
     // skew about origin
-    double expSkew = mean*mean*mean+3.*mean*sigma*sigma;
+    double expSkew = mean * mean * mean + 3. * mean * sigma * sigma;
 
     // x-values to try out
     vector<double> x;
@@ -208,10 +193,9 @@ public:
     TS_ASSERT_THROWS(getMomentsAboutOrigin(x, y), std::out_of_range);
 
     // now calculate the y-values
-    for (size_t i = 0; i < numX; ++i)
-    {
-      double temp = (x[i]-mean)/sigma;
-      y.push_back(exp(-.5*temp*temp)/(sigma * sqrt(2.*M_PI)));
+    for (size_t i = 0; i < numX; ++i) {
+      double temp = (x[i] - mean) / sigma;
+      y.push_back(exp(-.5 * temp * temp) / (sigma * sqrt(2. * M_PI)));
     }
 
     // Normal distribution values are taken from the wikipedia page
@@ -221,28 +205,29 @@ public:
       TS_ASSERT_EQUALS(aboutOrigin.size(), 4);
       TS_ASSERT_DELTA(aboutOrigin[0], 1., .0001);
       TS_ASSERT_DELTA(aboutOrigin[1], mean, .0001);
-      TS_ASSERT_DELTA(aboutOrigin[2], expVar, .001*expVar);
-      TS_ASSERT_DELTA(aboutOrigin[3], expSkew, .001*expSkew);
+      TS_ASSERT_DELTA(aboutOrigin[2], expVar, .001 * expVar);
+      TS_ASSERT_DELTA(aboutOrigin[3], expSkew, .001 * expSkew);
 
       std::cout << "Normal distribution about mean" << std::endl;
       vector<double> aboutMean = getMomentsAboutMean(x, y);
       TS_ASSERT_EQUALS(aboutMean.size(), 4);
       TS_ASSERT_DELTA(aboutMean[0], 1., .0001);
       TS_ASSERT_DELTA(aboutMean[1], 0., .0001);
-      TS_ASSERT_DELTA(aboutMean[2], sigma*sigma, .001*expVar);
-      TS_ASSERT_DELTA(aboutMean[3], 0., .0001*expSkew);
+      TS_ASSERT_DELTA(aboutMean[2], sigma * sigma, .001 * expVar);
+      TS_ASSERT_DELTA(aboutMean[3], 0., .0001 * expSkew);
     }
 
     // Now a gaussian function as a histogram
     y.clear();
-    for (size_t i = 0; i < numX-1; ++i) // one less y than x makes it a histogram
+    for (size_t i = 0; i < numX - 1;
+         ++i) // one less y than x makes it a histogram
     {
-      double templeft = (x[i]-mean)/sigma;
-      templeft = exp(-.5*templeft*templeft)/(sigma * sqrt(2.*M_PI));
-      double tempright = (x[i+1]-mean)/sigma;
-      tempright = exp(-.5*tempright*tempright)/(sigma * sqrt(2.*M_PI));
-      y.push_back(.5*deltaX*(templeft+tempright));
-//      std::cout << i << ":\t" << x[i] << "\t" << y[i] << std::endl;
+      double templeft = (x[i] - mean) / sigma;
+      templeft = exp(-.5 * templeft * templeft) / (sigma * sqrt(2. * M_PI));
+      double tempright = (x[i + 1] - mean) / sigma;
+      tempright = exp(-.5 * tempright * tempright) / (sigma * sqrt(2. * M_PI));
+      y.push_back(.5 * deltaX * (templeft + tempright));
+      //      std::cout << i << ":\t" << x[i] << "\t" << y[i] << std::endl;
     }
 
     // Normal distribution values are taken from the wikipedia page
@@ -252,19 +237,18 @@ public:
       TS_ASSERT_EQUALS(aboutOrigin.size(), 4);
       TS_ASSERT_DELTA(aboutOrigin[0], 1., .0001);
       TS_ASSERT_DELTA(aboutOrigin[1], mean, .0001);
-      TS_ASSERT_DELTA(aboutOrigin[2], expVar, .001*expVar);
-      TS_ASSERT_DELTA(aboutOrigin[3], expSkew, .001*expSkew);
+      TS_ASSERT_DELTA(aboutOrigin[2], expVar, .001 * expVar);
+      TS_ASSERT_DELTA(aboutOrigin[3], expSkew, .001 * expSkew);
 
       std::cout << "Normal distribution about mean" << std::endl;
       vector<double> aboutMean = getMomentsAboutMean(x, y);
       TS_ASSERT_EQUALS(aboutMean.size(), 4);
       TS_ASSERT_DELTA(aboutMean[0], 1., .0001);
       TS_ASSERT_DELTA(aboutMean[1], 0., .0001);
-      TS_ASSERT_DELTA(aboutMean[2], sigma*sigma, .001*expVar);
-      TS_ASSERT_DELTA(aboutMean[3], 0., .0001*expSkew);
+      TS_ASSERT_DELTA(aboutMean[2], sigma * sigma, .001 * expVar);
+      TS_ASSERT_DELTA(aboutMean[3], 0., .0001 * expSkew);
     }
   }
-
 };
 
 #endif // STATISTICSTEST_H_

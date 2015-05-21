@@ -104,10 +104,10 @@ void LoadBBY::init() {
   // offsets
   exts.clear();
   exts.push_back(".csv");
-  declareProperty(
-    new API::FileProperty("TubeOffsets", "", API::FileProperty::OptionalLoad, exts),
-    "The input filename of the tube offset data");
-    
+  declareProperty(new API::FileProperty("TubeOffsets", "",
+                                        API::FileProperty::OptionalLoad, exts),
+                  "The input filename of the tube offset data");
+
   declareProperty(new API::WorkspaceProperty<API::IEventWorkspace>(
       "OutputWorkspace", "", Kernel::Direction::Output));
 
@@ -160,23 +160,24 @@ void LoadBBY::exec() {
   bool maskFileLoaded = false;
   std::vector<bool> mask =
       createMaskVector(getPropertyValue("Mask"), maskFileLoaded);
-  
+
   // load tube offsets
   bool offsetFileLoaded = false;
-  std::vector<int> offsets = createOffsetVector(getPropertyValue("TubeOffsets"),
-                                                offsetFileLoaded);
+  std::vector<int> offsets =
+      createOffsetVector(getPropertyValue("TubeOffsets"), offsetFileLoaded);
   for (size_t x = 0; x != HISTO_BINS_X; x++) {
     int offset = offsets[x];
     if (offset != 0) {
       maskFileLoaded = true;
-          
+
       size_t s0 = HISTO_BINS_Y * x;
       if (offset > 0) {
         for (int y = 0; y != offset; y++)
           mask[s0 + (size_t)y] = false;
-      }
-      else { // if (offset < 0)
-        for (size_t y = static_cast<size_t>(static_cast<int>(HISTO_BINS_Y) + offset); y != HISTO_BINS_Y; y++)
+      } else { // if (offset < 0)
+        for (size_t y =
+                 static_cast<size_t>(static_cast<int>(HISTO_BINS_Y) + offset);
+             y != HISTO_BINS_Y; y++)
           mask[s0 + y] = false;
       }
     }
@@ -265,15 +266,15 @@ void LoadBBY::exec() {
   }
   progTracker.complete();
 
-  ANSTO::EventAssigner eventAssigner(eventVectors, mask, offsets,
-                                     HISTO_BINS_Y);
+  ANSTO::EventAssigner eventAssigner(eventVectors, mask, offsets, HISTO_BINS_Y);
   loadEvents(prog, "loading neutron events", file, tofMinBoundary,
              tofMaxBoundary, eventAssigner);
 
   Kernel::cow_ptr<MantidVec> axis;
   MantidVec &xRef = axis.access();
   xRef.resize(2, 0.0);
-  xRef[0] = std::max(0.0, eventCounter.tofMin() - 1); // just to make sure the bins hold it all
+  xRef[0] = std::max(0.0, eventCounter.tofMin() -
+                              1); // just to make sure the bins hold it all
   xRef[1] = eventCounter.tofMax() + 1;
   eventWS->setAllX(axis);
 
@@ -429,12 +430,19 @@ Geometry::Instrument_sptr LoadBBY::createInstrument(ANSTO::Tar::File &tarFile) {
   // http://www.mantidproject.org/HowToDefineGeometricShape for details on
   // shapes in Mantid.
   std::string detXML =
-    "<cuboid id=\"pixel\">"
-      "<left-front-bottom-point   x=\"+"+pixel_width_str+"\" y=\"-"+pixel_height_str+"\" z=\"0\"  />"
-      "<left-front-top-point      x=\"+"+pixel_width_str+"\" y=\"-"+pixel_height_str+"\" z=\""+pixel_depth_str+"\"  />"
-      "<left-back-bottom-point    x=\"-"+pixel_width_str+"\" y=\"-"+pixel_height_str+"\" z=\"0\"  />"
-      "<right-front-bottom-point  x=\"+"+pixel_width_str+"\" y=\"+"+pixel_height_str+"\" z=\"0\"  />"
-    "</cuboid>";
+      "<cuboid id=\"pixel\">"
+      "<left-front-bottom-point   x=\"+" +
+      pixel_width_str + "\" y=\"-" + pixel_height_str +
+      "\" z=\"0\"  />"
+      "<left-front-top-point      x=\"+" +
+      pixel_width_str + "\" y=\"-" + pixel_height_str + "\" z=\"" +
+      pixel_depth_str + "\"  />"
+                        "<left-back-bottom-point    x=\"-" +
+      pixel_width_str + "\" y=\"-" + pixel_height_str +
+      "\" z=\"0\"  />"
+      "<right-front-bottom-point  x=\"+" +
+      pixel_width_str + "\" y=\"+" + pixel_height_str + "\" z=\"0\"  />"
+                                                        "</cuboid>";
 
   // Create a shape object which will be shared by all pixels.
   Geometry::Object_sptr pixelShape =
@@ -647,7 +655,7 @@ std::vector<bool> LoadBBY::createMaskVector(const std::string &filename,
 std::vector<int> LoadBBY::createOffsetVector(const std::string &filename,
                                              bool &fileLoaded) {
   std::vector<int> result(HISTO_BINS_X, 0);
-      
+
   std::ifstream input(filename.c_str());
   if (input.good()) {
     std::string line;
@@ -659,19 +667,19 @@ std::vector<int> LoadBBY::createOffsetVector(const std::string &filename,
       auto i2 = line.find_first_of(",;", i1 + 1);
       if (i2 == std::string::npos)
         i2 = line.size();
-          
+
       size_t index = boost::lexical_cast<size_t>(line.substr(0, i1));
-      int offset = boost::lexical_cast<int>(line.substr(i1 + 1, line.size() - i1 - 1));
+      int offset =
+          boost::lexical_cast<int>(line.substr(i1 + 1, line.size() - i1 - 1));
 
       if (index < HISTO_BINS_X)
         result[index] = offset;
     }
     fileLoaded = true;
-  }
-  else {
+  } else {
     fileLoaded = false;
   }
-      
+
   return result;
 }
 

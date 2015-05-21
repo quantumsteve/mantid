@@ -10,7 +10,6 @@ using namespace boost::python;
 void export_ObjComponent()
 // clang-format on
 {
-  class_<ObjComponent, boost::python::bases<IObjComponent, Component>, boost::noncopyable>("ObjComponent", no_init)
-    ;
+  class_<ObjComponent, boost::python::bases<IObjComponent, Component>,
+         boost::noncopyable>("ObjComponent", no_init);
 }
-

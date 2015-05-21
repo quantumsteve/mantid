@@ -202,9 +202,8 @@ void IntegrateFlux::integrateSpectraEvents(
  * @param inputWS :: A 2d workspace to integrate.
  * @param integrWS :: A workspace to store the results.
  */
-void
-IntegrateFlux::integrateSpectraMatrix(const API::MatrixWorkspace &inputWS,
-                                      API::MatrixWorkspace &integrWS) const {
+void IntegrateFlux::integrateSpectraMatrix(
+    const API::MatrixWorkspace &inputWS, API::MatrixWorkspace &integrWS) const {
   bool isHistogram = inputWS.isHistogramData();
 
   if (isHistogram) {
@@ -347,9 +346,8 @@ void IntegrateFlux::integrateSpectraHistograms(
  * @param inputWS :: A 2d workspace to integrate.
  * @param integrWS :: A workspace to store the results.
  */
-void
-IntegrateFlux::integrateSpectraPointData(const API::MatrixWorkspace &inputWS,
-                                         API::MatrixWorkspace &integrWS) const {
+void IntegrateFlux::integrateSpectraPointData(
+    const API::MatrixWorkspace &inputWS, API::MatrixWorkspace &integrWS) const {
   size_t nSpec = inputWS.getNumberHistograms();
   assert(nSpec == integrWS.getNumberHistograms());
 
